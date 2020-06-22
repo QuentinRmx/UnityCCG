@@ -1,6 +1,7 @@
 ﻿using System;
+using Assets.Scripts.States;
 
-namespace Assets.Scripts.States
+namespace States
 {
     public interface IStateMachine
     {

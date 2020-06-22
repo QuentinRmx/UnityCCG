@@ -24,13 +24,13 @@ namespace Assets.Scripts.Components
 
         public float HoverAnimationSpeed = 100f;
 
-        private bool _isHovered = false;
+        private bool _isHovered;
 
         private Vector3 _originPosition;
 
         private Vector3 _hoverPosition;
 
-        private bool _isInHoverPosition = false;
+        private bool _isInHoverPosition;
 
         // Start is called before the first frame update
         void Start()
@@ -56,7 +56,6 @@ namespace Assets.Scripts.Components
 
         private void PlayHoverAnimation()
         {
-            Debug.Log($"Dest: {_hoverPosition.x},{_hoverPosition.y}, {_hoverPosition.z}");
             float step = HoverAnimationSpeed * Time.deltaTime;
 
             //Vector3.MoveTowards(transform.position, _hoverPosition, step);

@@ -1,10 +1,14 @@
 using System;
 using Assets.Scripts.States;
+using Cards.CardEffects;
 using Components;
+using Managers;
+using States;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Cards
-{
+{ 
     /// <summary>
     /// TODO: Write the doc.
     /// </summary>
@@ -22,12 +26,11 @@ namespace Cards
 
         private GameObject _hoverGameObject;
 
-        // CONSTRUCTORS
+        public Text CardUiHealth;
 
-        public Card()
-        {
-        }
+        public CardInfo CardInfo;
 
+        public CardEffectDealDamage CardEffect;
 
         // METHODS
 
@@ -48,9 +51,26 @@ namespace Cards
         private void Start()
         {
             _draggingComponent = GetComponent<DraggingComponent>();
+            if (_draggingComponent != null)
+            {
+                UnityBridge ub = FindObjectOfType<UnityBridge>();
+                _draggingComponent.OnDragForwardSuccessful += (sender, args) => ub.PlayCard(this);
+                _draggingComponent.OnDragBackwardSuccessful += (sender, args) => ub.RerollCard(this);
+            }
             _hoverGameObject = transform.GetChild(0).gameObject;
             _hoverGameObject.SetActive(false);
             ChangeState(StateIdle.Instance, null, null);
+            CardUiHealth.text = CardInfo.Health.ToString();
+            CardEffect = new CardEffectDealDamage(ETargetSelector.AllEnemy);
+        }
+
+        public void Play(CombatManager cm) {
+            CardEffect.Resolve(this, cm);
+        }
+
+        public void Reroll(CombatManager cm)
+        {
+            Debug.Log("Card:Reroll");
         }
 
         private void Update()
@@ -82,14 +102,6 @@ namespace Cards
             ChangeState(StateDragged.Instance, StartDragging, StopDragging);
         }
 
-        private void OnMouseDrag()
-        {
-            //if (CurrentState is StateDragged)
-            //{
-            //    GetComponent<DraggingComponent>()?.Drag();
-            //}
-        }
-
         private void OnMouseUp()
         {
             if (CurrentState is StateDragged)
@@ -118,6 +130,15 @@ namespace Cards
         private void StopDragging()
         {
             GetComponent<DraggingComponent>()?.StopDragging();
+        }
+
+        public void DealDamage(int damage)
+        {
+            this.CardInfo.Health -= damage;
+            CardUiHealth.text = CardInfo.Health.ToString();
+            Debug.Log(CardUiHealth.text);
+            if (CardInfo.Health <= 0)
+                Destroy(this.gameObject);
         }
     }
 }

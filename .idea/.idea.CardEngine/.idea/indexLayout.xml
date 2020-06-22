@@ -16,10 +16,10 @@
       <Path>.git</Path>
       <Path>.idea</Path>
       <Path>.vs</Path>
+      <Path>.vscode</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
-      <Path>Temp</Path>
-      <Path>backup solution vs2017</Path>
+      <Path>docs</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>

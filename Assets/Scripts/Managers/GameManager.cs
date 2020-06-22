@@ -1,19 +1,58 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Cards;
+using UnityEngine;
 
-namespace Assets.Scripts.Managers
+namespace Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager
     {
-        // Start is called before the first frame update
-        void Start()
+        // SINGLETON4
+        private static GameManager _instance;
+        public static GameManager Instance => _instance = _instance ?? new GameManager();
+
+        private readonly CombatManager _combatManager;
+
+        // ATTRIBUTES
+
+
+        // CONSTRUCTOR
+
+        private GameManager()
         {
-        
+            _combatManager = new CombatManager(new BoardManager());
         }
 
-        // Update is called once per frame
-        void Update()
+        // METHODS
+
+        public void PlayCard(Card card)
         {
+            card.Play(_combatManager);
+            // TODO: Notify board that the card needs to be removed from hand and put into sanctuary.
+            _combatManager.NbCardsPlayed++;
+        }
         
+        public void RerollCard(Card card)
+        {
+            card.Reroll(_combatManager);
+            // TODO: Notify board that the card needs to be removed from hand and put into sanctuary.
+            _combatManager.NbCardsRerolled++;
+        }
+
+        public void AddEnemy(Card card)
+        {
+            _combatManager.AddEnemy(card);
+        }
+
+        public void RemoveEnemy(Card card)
+        {
+            _combatManager.RemoveEnemy(card);
+        }
+
+        public CombatManager GetCombatManager()
+        {
+            return _combatManager;
         }
     }
 }

@@ -1,7 +1,8 @@
 using System;
+using Assets.Scripts.States;
 using UnityEngine;
 
-namespace Assets.Scripts.States
+namespace States
 {
     [Serializable]
     public class StateIdle : State

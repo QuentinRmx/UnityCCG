@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 //TODO: Refactor this to use StateMachine.
 namespace Components
@@ -8,9 +9,9 @@ namespace Components
     /// </summary>
     public class DraggingComponent : MonoBehaviour
     {
-        private bool _isDragging = false;
+        private bool _isDragging;
 
-        private bool _isGoingBack = false;
+        private bool _isGoingBack;
 
         private float distance;
 
@@ -27,6 +28,13 @@ namespace Components
         private Vector3 _offset;
 
         private Camera _mainCamera;
+
+        public float DragDistanceForward = -25f;
+        
+        public float DragDistanceBackward = 25f;
+
+        public event EventHandler OnDragForwardSuccessful;
+        public event EventHandler OnDragBackwardSuccessful;
 
         // Start is called before the first frame update
         private void Start()
@@ -46,13 +54,25 @@ namespace Components
         public void Drag()
         {
             //keep track of the mouse position
-            var cursorScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenSpace.z);
+            Vector3 cursorScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenSpace.z);
 
             //convert the screen mouse position to world point and adjust with offset
             Vector3 curPosition = _mainCamera.ScreenToWorldPoint(cursorScreenSpace) /*+ _offset*/;
 
             //update the position of the object in the world
-            transform.position = curPosition;
+            Transform transform1 = transform;
+            transform1.position = curPosition;
+            float currentDistance = _originPosition.z - transform1.position.z;
+//            Debug.Log(currentDistance);
+            if (currentDistance < DragDistanceForward)
+            {
+                OnDragForwardSuccessful?.Invoke(this, null);
+                OnDragForwardSuccessful = (sender, args) => { };
+            } else if (currentDistance > DragDistanceBackward)
+            {
+                OnDragBackwardSuccessful?.Invoke(this, null);
+                OnDragBackwardSuccessful = (sender, args) => { };
+            }
         }
 
         private void GoBackToOrigin()
@@ -89,11 +109,6 @@ namespace Components
         public void StopDragging()
         {
             SetDraggingState(false);
-        }
-
-        private void OnMouseUp()
-        {
-            //StopDragging();
         }
     }
 }

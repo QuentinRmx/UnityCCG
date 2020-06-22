@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assets.Scripts.States;
 
-namespace Assets.Scripts.States
+namespace States
 {
     public class StateDragged : State
     {
         // FIELDS
 
-        public static StateDragged Instance = new StateDragged()
+        public static readonly StateDragged Instance = new StateDragged()
         {
             Priority = 10
         };

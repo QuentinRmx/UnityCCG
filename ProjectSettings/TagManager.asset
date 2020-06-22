@@ -14,9 +14,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - CardLayer1
+  - CardLayer2
+  - CardLayer3
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Pictures
+    uniqueID: 1085861057
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using States;
 
 namespace Assets.Scripts.States
 {
@@ -13,9 +14,9 @@ namespace Assets.Scripts.States
 
         public string Name;
 
-        public bool Locked = false;
+        public bool Locked;
 
-        public int Priority = 0;
+        public int Priority;
 
         public void SetContext(IStateMachine context, Action enterAction, Action exitAction)
         {

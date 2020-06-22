@@ -58,14 +58,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardEffects\CardEffectDealDamage.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardEffects\CardInfo.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardEffects\ETargetSelector.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardEffects\ICardEffect.cs" />
+    <Compile Include="Assets\Scripts\Cards\IPlayable.cs" />
+    <Compile Include="Assets\Scripts\Centers\UICenter.cs" />
     <Compile Include="Assets\Scripts\Components\DraggingComponent.cs" />
     <Compile Include="Assets\Scripts\Components\HoverComponent.cs" />
+    <Compile Include="Assets\Scripts\Core\BoardCoordinates.cs" />
+    <Compile Include="Assets\Scripts\Core\BoardSlot.cs" />
+    <Compile Include="Assets\Scripts\Core\CardBoard.cs" />
+    <Compile Include="Assets\Scripts\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\CombatManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\UnityBridge.cs" />
     <Compile Include="Assets\Scripts\States\IStateMachine.cs" />
     <Compile Include="Assets\Scripts\States\State.cs" />
     <Compile Include="Assets\Scripts\States\StateDragged.cs" />
     <Compile Include="Assets\Scripts\States\StateHovered.cs" />
     <Compile Include="Assets\Scripts\States\StateIdle.cs" />
+    <Compile Include="Assets\Scripts\States\StateInSlot.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/_dev/Unity/CardEngine/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
