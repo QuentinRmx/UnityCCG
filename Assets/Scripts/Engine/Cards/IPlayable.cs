@@ -1,6 +1,4 @@
-using System;
-
-namespace Cards
+namespace Engine.Cards
 {
     public interface IPlayable
     {

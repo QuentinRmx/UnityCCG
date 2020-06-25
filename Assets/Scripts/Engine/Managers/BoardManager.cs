@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Cards;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Engine.Cards;
 using UnityEngine;
 
-namespace Managers
+namespace Engine.Managers
 {
     public class BoardManager
     {
 
-        private List<Card> _enemies;
-
+        private readonly List<Card> _enemies;
+        
         public BoardManager()
         {
             _enemies = new List<Card>();
@@ -25,10 +25,19 @@ namespace Managers
             _enemies.Remove(c);
         }
 
+        public void ClearEnemies()
+        {
+            _enemies.Clear();
+        }
+
         public List<Card> GetEnemyBoard()
         {
-            Debug.Log(_enemies.Count);
             return _enemies;
+        }
+
+        public Card GetEnemyByInstanceId(int instanceId)
+        {
+            return _enemies.FirstOrDefault(e => e.CardInfo.InstanceId == instanceId);
         }
     }
 }

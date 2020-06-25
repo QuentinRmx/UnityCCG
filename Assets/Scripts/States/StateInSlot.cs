@@ -1,5 +1,3 @@
-using Assets.Scripts.States;
-
 namespace States
 {
     public class StateInSlot : State

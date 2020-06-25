@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Components
+namespace Unity.Components
 {
     public class HoverComponent : MonoBehaviour
     {

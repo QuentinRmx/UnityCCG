@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets.Scripts.States;
 
 namespace States
 {

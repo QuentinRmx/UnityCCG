@@ -18,6 +18,7 @@ class BoardManager {
     ennemyBoard: List<Card>;
     hero: Card;
     companions: List<Card>;
+    
 }
 
 class CombatManager {

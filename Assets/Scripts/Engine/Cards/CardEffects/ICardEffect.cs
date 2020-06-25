@@ -1,6 +1,6 @@
-using Managers;
+using Engine.Managers;
 
-namespace Cards.CardEffects
+namespace Engine.Cards.CardEffects
 {
     public interface ICardEffect
     {

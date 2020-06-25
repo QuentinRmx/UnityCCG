@@ -2,7 +2,7 @@
 using UnityEngine;
 
 //TODO: Refactor this to use StateMachine.
-namespace Components
+namespace Unity.Components
 {
     /// <summary>
     /// https://forum.unity.com/threads/implement-a-drag-and-drop-script-with-c.130515/

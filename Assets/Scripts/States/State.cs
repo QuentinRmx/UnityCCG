@@ -1,7 +1,6 @@
 ﻿using System;
-using States;
 
-namespace Assets.Scripts.States
+namespace States
 {
     [Serializable]
     public class State
