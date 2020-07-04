@@ -17,9 +17,9 @@ namespace Engine.Bridges
 
         private GameManager _gameManager;
 
-        private List<CardGameObject> _playerHand;
+        private List<HandCardGameObject> _playerHand;
 
-        private List<CardGameObject> _enemies;
+        private List<EnemyCardGameObject> _enemies;
 
         // PUBLIC ATTRIBUTES
 
@@ -29,28 +29,37 @@ namespace Engine.Bridges
 
         public GameObject CardGameObjectPrefab;
 
+        public GameObject EnemyPrefab;
+
         // METHODS
 
         private void Start()
         {
             _uiCenter = FindObjectOfType<UICenter>();
-            _enemies = new List<CardGameObject>();
-            _playerHand = new List<CardGameObject>();
+            _uiCenter.SetBridge(this);
+            _enemies = new List<EnemyCardGameObject>();
+            _playerHand = new List<HandCardGameObject>();
             _gameManager = new GameManager(this);
         }
-        
-        
+
+
         // REQUESTS FROM UI TO GAME MANAGER.
 
         public void PlayCard(int instanceId)
         {
-            Debug.Log("card played: " + instanceId);
-            CardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
+            HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
             if (cardInHand != null)
             {
                 _gameManager.PlayCard(instanceId);
                 // Play logic here.
                 Destroy(cardInHand.gameObject);
+                _uiCenter.SetCardsPlayed(_gameManager.CombatManager.NbCardsPlayed);
+                _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
+                // TODO: Implement proper win detection.
+                if (_gameManager.CombatManager.HasWon)
+                {
+                    _uiCenter.Win();
+                }
             }
         }
 
@@ -65,31 +74,16 @@ namespace Engine.Bridges
             }
         }
 
-//        public void PlayCard(Card card)
-//        {
-//            _gameManager.PlayCard(card);
-////            Destroy(card.gameObject);
-//            _uiCenter.SetCardsPlayed(_gameManager.GetCombatManager().NbCardsPlayed);
-//        }
-
-//        public void RerollCard(Card card)
-//        {
-//            _gameManager.RerollCard(card);
-////            Destroy(card.gameObject);
-//            _uiCenter.SetCardsRerolled(_gameManager.GetCombatManager().NbCardsRerolled);
-//        }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="enemy"></param>
         public void AddEnemy(Card enemy)
         {
-            GameObject enemyGo = Instantiate(CardGameObjectPrefab);
-            CardInfo data = enemy.CardInfo;
-            CardGameObject cardGameObject = enemyGo.GetComponent<CardGameObject>();
-            cardGameObject.SetCardData(data.InstanceId, data.Name, data.Health, data.Attack);
-            enemy.OnUpdate += cardGameObject.Update;
+            GameObject enemyGo = Instantiate(EnemyPrefab);
+            EnemyCardGameObject cardGameObject = enemyGo.GetComponent<EnemyCardGameObject>();
+            cardGameObject.SetCardData(enemy.CardInfo);
+            enemy.OnDataChanged += cardGameObject.DataChangedCardData;
             _enemies.Add(cardGameObject);
             _uiCenter.AddEnemy(enemyGo);
         }
@@ -99,10 +93,9 @@ namespace Engine.Bridges
             _gameManager.RemoveEnemy(enemy);
         }
 
-        
 
         // REQUESTS FROM GAME MANAGER TO UI
-        
+
         /// <summary>
         /// Add a CardGameObject to the scene corresponding to a card in the player's hand.
         /// </summary>
@@ -110,19 +103,24 @@ namespace Engine.Bridges
         public void AddCardToPlayerHand(Card toAdd)
         {
             GameObject newCard = Instantiate(CardGameObjectPrefab);
-            CardGameObject cardGo = newCard.GetComponent<CardGameObject>();
+            HandCardGameObject cardGo = newCard.GetComponent<HandCardGameObject>();
             if (cardGo != null)
             {
                 cardGo.RegisterBridge(this);
-                cardGo.SetCardData(
-                    toAdd.CardInfo.InstanceId,
-                    toAdd.CardInfo.Name,
-                    toAdd.CardInfo.Health,
-                    toAdd.CardInfo.Attack);
+                cardGo.SetCardData(toAdd.CardInfo);
             }
-            toAdd.OnUpdate += cardGo.Update;
+
+            toAdd.OnDataChanged += cardGo.DataChangedCardData;
             _playerHand.Add(cardGo);
             _uiCenter.AddCardToHand(newCard);
+        }
+
+        /// <inheritdoc />
+        public void EndTurn()
+        {
+            _gameManager.EndTurn();
+            _uiCenter.SetTurn(_gameManager.GetTurnNumber());
+            _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
         }
 
         public void AddAllCardsToPlayerHand(List<Card> toAdd)

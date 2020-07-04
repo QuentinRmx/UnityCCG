@@ -39,5 +39,10 @@ namespace Engine.Managers
         {
             return _enemies.FirstOrDefault(e => e.CardInfo.InstanceId == instanceId);
         }
+
+        public int Count()
+        {
+            return _enemies.Count;
+        }
     }
 }

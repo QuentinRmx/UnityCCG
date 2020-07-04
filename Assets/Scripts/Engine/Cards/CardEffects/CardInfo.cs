@@ -9,5 +9,6 @@ namespace Engine.Cards.CardEffects
         public string Name;
         public int Health;
         public int Attack;
+        public int MaxHealth;
     }
 }

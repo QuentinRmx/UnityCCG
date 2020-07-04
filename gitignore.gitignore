@@ -60,3 +60,11 @@ crashlytics-build.properties
 /.idea/
 /.vs/
 /.vscode/
+
+/Logs/
+/obj/
+/Packages/
+/Temp/
+/Library/
+
+/Library

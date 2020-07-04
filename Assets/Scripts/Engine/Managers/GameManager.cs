@@ -9,6 +9,8 @@ namespace Engine.Managers
     {
         private readonly CombatManager _combatManager;
 
+        public CombatManager CombatManager => _combatManager;
+
         private readonly IBridge _bridge;
 
         // ATTRIBUTES
@@ -20,51 +22,21 @@ namespace Engine.Managers
         {
             _bridge = bridge;
             _combatManager = new CombatManager(new BoardManager());
-            CardInfo info = new CardInfo()
-            {
-                Attack = 25,
-                Health = 30,
-                Name = "Dark Spirit"
-            };
-            Card toAdd = new Card(new CardEffectAttack(ETargetSelector.AllEnemy));
-            info.InstanceId = Card.lastInstanceId;
-            toAdd.CardInfo = info;
-            AddEnemy(toAdd);
-            info = new CardInfo()
-            {
-                Attack = 10,
-                Health = 10,
-                Name = "Black Spirit"
-            };
-            toAdd = new Card(new CardEffectAttack(ETargetSelector.AllEnemy));
-            info.InstanceId = Card.lastInstanceId;
-            toAdd.CardInfo = info;
-            AddCardToHand(toAdd);
-            toAdd = new Card(new CardEffectAttack(ETargetSelector.AllEnemy));
-            info.InstanceId = Card.lastInstanceId;
-            toAdd.CardInfo = info;
-            AddCardToHand(toAdd);
-            toAdd = new Card(new CardEffectAttack(ETargetSelector.AllEnemy));
-            info.InstanceId = Card.lastInstanceId;
-            toAdd.CardInfo = info;
-            AddCardToHand(toAdd);
-            toAdd = new Card(new CardEffectAttack(ETargetSelector.AllEnemy));
-            info.InstanceId = Card.lastInstanceId;
-            toAdd.CardInfo = info;
-            AddCardToHand(toAdd);
+
+            // TODO: Load enemies.
+            AddEnemy(Card.Factory.Create(1));
+
+            // TODO: Load player hand.
+            AddCardToHand(Card.Factory.Create(0));
+            AddCardToHand(Card.Factory.Create(0));
+            AddCardToHand(Card.Factory.Create(0));
         }
 
         // METHODS
 
         public void PlayCard(int instanceId)
         {
-            Card card = _combatManager.GetPlayerHand().FirstOrDefault(c => c.CardInfo.InstanceId == instanceId);
-            if (card != null)
-            {
-                card.Play(_combatManager);
-                // TODO: Notify board that the card needs to be removed from hand and put into sanctuary.
-                _combatManager.NbCardsPlayed++;
-            }
+            _combatManager.PlayCardFromHand(instanceId);
         }
 
         public void RerollCard(Card card)
@@ -91,5 +63,14 @@ namespace Engine.Managers
             _combatManager.RemoveEnemy(card);
         }
 
+        public void EndTurn()
+        {
+            _combatManager.EndTurn();
+        }
+
+        public int GetTurnNumber()
+        {
+            return _combatManager.Turn;
+        }
     }
 }

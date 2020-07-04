@@ -9,5 +9,7 @@ namespace Engine.Bridges
         void AddEnemy(Card enemy);
 
         void AddCardToPlayerHand(Card card);
+
+        void EndTurn();
     }
 }

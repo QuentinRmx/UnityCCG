@@ -1,5 +1,4 @@
 using System;
-using Engine;
 using Engine.Bridges;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
@@ -10,116 +9,33 @@ using UnityEngine.UI;
 
 namespace Unity.GameObjects
 {
-    public class CardGameObject : MonoBehaviour, IStateMachine
+    public abstract class CardGameObject : MonoBehaviour
     {
         // PUBLIC ATTRIBUTES
-
-        [SerializeField] public State CurrentState;
-
-        public Text CardUiHealth;
-
         public int InstanceId;
 
-        // PRIVATE ATTRIBUTES
-        
-//        public UnityBridge _ub;
-
-        private DraggingComponent _draggingComponent;
+        public Image ArtworkImage;
 
 
         // METHODS
 
-        private void Start()
+        public void SetCardData(CardInfo infos)
         {
-            _draggingComponent = GetComponent<DraggingComponent>();
-            
-            
-            ChangeState(StateIdle.Instance, null, null);
-        }
-        
-        private void Update()
-        {
-            if (CurrentState is StateDragged)
-            {
-                _draggingComponent.Drag();
-            }
-        }
-        
-        private void OnMouseDown()
-        {
-            ChangeState(StateDragged.Instance, StartDragging, StopDragging);
+            InstanceId = infos.InstanceId;
         }
 
-        private void OnMouseUp()
+        /// <summary>
+        /// Called by the Card object when something is updated and the CardGameObject associated needs to be associated
+        /// (typically health changes or status).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        public void DataChangedCardData(object sender, EventArgs args)
         {
-            if (CurrentState is StateDragged)
-            {
-                ChangeState(StateIdle.Instance, null, null);
-            }
-        }
-
-        private void StartDragging()
-        {
-            GetComponent<DraggingComponent>()?.StartDragging();
-        }
-
-        private void StopDragging()
-        {
-            GetComponent<DraggingComponent>()?.StopDragging();
-        }
-        
-        /// <inheritdoc />
-        public void ChangeState(State newState, Action enterAction, Action exitAction)
-        {
-            if (CurrentState.Locked)
-            {
-                return;
-            }
-
-            CurrentState.ExitState();
-            CurrentState = newState;
-            CurrentState.SetContext(this, enterAction, exitAction);
-            CurrentState.EnterState();
-        }
-
-        public void RegisterBridge(UnityBridge ub)
-        {
-            // TODO: Cleanup code smell
-            if (_draggingComponent == null)
-            {
-                _draggingComponent = GetComponent<DraggingComponent>();
-            }
-
-            if (_draggingComponent != null)
-            {
-                _draggingComponent.OnDragForwardSuccessful += (sender, args) => ub.PlayCard(InstanceId);
-                _draggingComponent.OnDragBackwardSuccessful += (sender, args) => ub.RerollCard(InstanceId);
-            }
-        }
-
-        public void SetCardData(int id, string cardName, int health, int attack)
-        {
-            SetCurrentHealth(health);
-            InstanceId = id;
-        }
-
-        public void SetCurrentHealth(int health)
-        {
-            CardUiHealth.text = health.ToString();
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        public void Update(object sender, EventArgs args)
-        {
-            // TODO: Decouple so we don't use an engine class here.
-            Debug.Log(sender);
+            // TODO: Pass raw data so we don't use an engine class here.
             if (sender is Card c)
             {
-                CardInfo ci = c.CardInfo;
-                SetCardData(ci.InstanceId, ci.Name, ci.Health, ci.Attack);
+                SetCardData(c.CardInfo);
             }
         }
     }
