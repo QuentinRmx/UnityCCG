@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="C:\Users\quent\.Rider2019.2\config\scratches" t="IncludeRecursive" />
     <e p="C:\Users\quent\.Rider2019.2\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\quent\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_CardEngine.-881872759.00" t="ExcludeRecursive" />
     <e p="D:\_dev\Unity\CardEngine" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
-          <e p="Cards" t="Include">
-            <e p="Card.cs" t="Include" />
+          <e p="Engine" t="Include">
+            <e p="Bridges" t="Include">
+              <e p="IBridge.cs" t="Include" />
+              <e p="UnityBridge.cs" t="Include" />
+            </e>
+            <e p="Cards" t="Include">
+              <e p="Card.cs" t="Include" />
+              <e p="CardEffects" t="Include">
+                <e p="CardEffectAttack.cs" t="Include" />
+                <e p="CardEffectNone.cs" t="Include" />
+                <e p="ETargetSelector.cs" t="Include" />
+                <e p="ICardEffect.cs" t="Include" />
+              </e>
+              <e p="CardFactory.cs" t="Include" />
+              <e p="CardInfo.cs" t="Include" />
+              <e p="IPlayable.cs" t="Include" />
+            </e>
+            <e p="Communication" t="Include">
+              <e p="IAction.cs" t="Include" />
+              <e p="IResult.cs" t="Include" />
+            </e>
+            <e p="Managers" t="Include">
+              <e p="BoardManager.cs" t="Include" />
+              <e p="CombatManager.cs" t="Include" />
+              <e p="GameManager.cs" t="Include" />
+            </e>
+            <e p="Utils" t="Include">
+              <e p="InstanceIdManager.cs" t="Include" />
+            </e>
           </e>
-          <e p="Components" t="Include">
-            <e p="DraggingComponent.cs" t="Include" />
-            <e p="HoverComponent.cs" t="Include" />
-          </e>
-          <e p="Managers" t="Include">
-            <e p="GameManager.cs" t="Include" />
-          </e>
-          <e p="States" t="Include">
-            <e p="IStateMachine.cs" t="Include" />
-            <e p="State.cs" t="Include" />
-            <e p="StateDragged.cs" t="Include" />
-            <e p="StateHovered.cs" t="Include" />
-            <e p="StateIdle.cs" t="Include" />
+          <e p="Unity" t="Include">
+            <e p="Centers" t="Include">
+              <e p="ResourceCenter.cs" t="Include" />
+              <e p="UICenter.cs" t="Include" />
+            </e>
+            <e p="Components" t="Include">
+              <e p="DraggingComponent.cs" t="Include" />
+              <e p="HoverComponent.cs" t="Include" />
+            </e>
+            <e p="GameObjects" t="Include">
+              <e p="CardGameObject.cs" t="Include" />
+              <e p="EnemyCardGameObject.cs" t="Include" />
+              <e p="HandCardGameObject.cs" t="Include" />
+            </e>
+            <e p="States" t="Include">
+              <e p="IStateMachine.cs" t="Include" />
+              <e p="State.cs" t="Include" />
+              <e p="StateDragged.cs" t="Include" />
+              <e p="StateHovered.cs" t="Include" />
+              <e p="StateIdle.cs" t="Include" />
+              <e p="StateInSlot.cs" t="Include" />
+            </e>
           </e>
         </e>
       </e>

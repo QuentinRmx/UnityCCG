@@ -1,0 +1,62 @@
+@startuml MDD/UML - CardEngine - RogueLike Edition
+title MDD/UML - CardEngine - RogueLike Edition
+
+skinparam style strictuml
+skinparam defaultfontname Verdana
+hide empty member
+skinparam sequence {
+  MessageAlign center
+}
+
+class GameManager {
+    player: Player;
+    combatManager: CombatManager;
+    
+}
+
+class BoardManager {
+    ennemyBoard: List<Card>;
+    hero: Card;
+    companions: List<Card>;
+    
+}
+
+class CombatManager {
+    actionStack: Queue<Action<Result>>;
+    PushAction(a: Action<Result>): void;
+    StartTurn(): void;
+    EndTurn(): void;
+}
+
+class Card {
+    infos: Infos;
+    Play(cm: CombatManager): Action<Result>;
+    Reroll(cm: CombatManager): Action<Result>;
+    CanPlay(cm: CombatManager): boolean;
+}
+
+class Infos {
+    id: int;
+    name: string;
+    cost: int;
+    type: CardType;
+}
+
+enum ECardType {
+    Attack;
+    Spell;
+    Skill;
+    Hero;
+    Companion;
+    Ennemy;
+    Treasure;
+}
+
+
+GameManager "1"--"1" BoardManager: "owns" >
+GameManager "1"--"1" CombatManager: "owns" >
+Card "1"*--"1" Infos: "contains" >
+Infos "1"*--"1" ECardType: "contains" >
+BoardManager "*"--"0..*" Card: "manage" >
+
+@enduml
