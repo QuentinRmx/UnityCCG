@@ -47,13 +47,14 @@ namespace Engine.Cards
                 case 0:
                     effect = new CardEffectNone();
                     break;
-
                 case 1:
                     effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
                     break;
-
                 case 2:
                     effect = new CardEffectAttack(ETargetSelector.AllEnemy);
+                    break;
+                case 3:
+                    effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
                     break;
                 default:
                     return null;

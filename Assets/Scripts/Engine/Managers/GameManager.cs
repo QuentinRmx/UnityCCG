@@ -35,7 +35,7 @@ namespace Engine.Managers
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
-                CardFactory.Instance.Create(2),
+                CardFactory.Instance.Create(3),
             };
             CombatManager.SetPlayerDeck(deckTest);
             CombatManager.StartTurn();

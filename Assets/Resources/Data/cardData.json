@@ -16,5 +16,11 @@
     "Name": "Cursed Captain",
     "Attack": 25,
     "Text": "Deal 25 damage to a random enemy."
+  },
+  {
+    "Identifier": 3,
+    "Name": "Ship Devourer",
+    "Attack": 50,
+    "Text": "Deal 50 damage to a random enemy."
   }
 ]
