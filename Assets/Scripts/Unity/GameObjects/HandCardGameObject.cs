@@ -1,5 +1,7 @@
 using System;
 using Engine.Bridges;
+using Engine.Cards;
+using Engine.Cards.CardEffects;
 using States;
 using Unity.Components;
 using UnityEngine;
@@ -90,6 +92,12 @@ namespace Unity.GameObjects
                 _draggingComponent.OnDragForwardSuccessful += (sender, args) => ub.PlayCard(InstanceId);
                 _draggingComponent.OnDragBackwardSuccessful += (sender, args) => ub.RerollCard(InstanceId);
             }
+        }
+        
+        public new void SetCardData(CardInfo infos)
+        {
+            base.SetCardData(infos);
+            TextEffect.text = infos.Text;
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Engine.Bridges;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
@@ -7,9 +8,7 @@ namespace Engine.Managers
 {
     public class GameManager
     {
-        private readonly CombatManager _combatManager;
-
-        public CombatManager CombatManager => _combatManager;
+        public CombatManager CombatManager { get; }
 
         private readonly IBridge _bridge;
 
@@ -21,56 +20,68 @@ namespace Engine.Managers
         public GameManager(IBridge bridge)
         {
             _bridge = bridge;
-            _combatManager = new CombatManager(new BoardManager());
+            CombatManager = new CombatManager(new BoardManager());
+            CombatManager.OnCardAddedToHand += _bridge.AddCardToPlayerHand;
 
             // TODO: Load enemies.
-            AddEnemy(Card.Factory.Create(1));
+            AddEnemy(CardFactory.Instance.Create(0));
 
             // TODO: Load player hand.
-            AddCardToHand(Card.Factory.Create(0));
-            AddCardToHand(Card.Factory.Create(0));
-            AddCardToHand(Card.Factory.Create(0));
+            List<Card> deckTest = new List<Card>
+            {
+                CardFactory.Instance.Create(1), 
+                CardFactory.Instance.Create(1), 
+                CardFactory.Instance.Create(1), 
+                CardFactory.Instance.Create(2),
+                CardFactory.Instance.Create(2),
+                CardFactory.Instance.Create(2),
+                CardFactory.Instance.Create(2),
+            };
+            CombatManager.SetPlayerDeck(deckTest);
+            CombatManager.StartTurn();
         }
 
         // METHODS
 
         public void PlayCard(int instanceId)
         {
-            _combatManager.PlayCardFromHand(instanceId);
+            CombatManager.PlayCardFromHand(instanceId);
         }
 
         public void RerollCard(Card card)
         {
-            card.Reroll(_combatManager);
+            card.Reroll(CombatManager);
             // TODO: Notify board that the card needs to be removed from hand and put into sanctuary.
-            _combatManager.NbCardsRerolled++;
+            CombatManager.NbCardsRerolled++;
         }
 
         public void AddEnemy(Card card)
         {
-            _combatManager?.AddEnemy(card);
+            CombatManager?.AddEnemy(card);
             _bridge?.AddEnemy(card);
         }
 
-        public void AddCardToHand(Card card)
-        {
-            _combatManager?.AddCardToHand(card);
-            _bridge?.AddCardToPlayerHand(card);
-        }
+//        public void AddCardToHand(Card card)
+//        {
+//            CombatManager?.AddCardToHand(card);
+//            _bridge?.AddCardToPlayerHand(card);
+//        }
 
         public void RemoveEnemy(Card card)
         {
-            _combatManager.RemoveEnemy(card);
+            CombatManager.RemoveEnemy(card);
         }
 
         public void EndTurn()
         {
-            _combatManager.EndTurn();
+            CombatManager.EndTurn();
+            // TODO: Add enemy turn logic here.
+            CombatManager.StartTurn();
         }
 
         public int GetTurnNumber()
         {
-            return _combatManager.Turn;
+            return CombatManager.Turn;
         }
     }
 }

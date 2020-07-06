@@ -281,3 +281,6 @@ D:\_dev\Unity\CardEngine\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 D:\_dev\Unity\CardEngine\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\_dev\Unity\CardEngine\obj\Debug\Assembly-CSharp.dll
 D:\_dev\Unity\CardEngine\obj\Debug\Assembly-CSharp.pdb
+D:\_dev\Unity\CardEngine\Temp\bin\Debug\Newtonsoft.Json.dll
+D:\_dev\Unity\CardEngine\Temp\bin\Debug\Newtonsoft.Json.pdb
+D:\_dev\Unity\CardEngine\Temp\bin\Debug\Newtonsoft.Json.xml

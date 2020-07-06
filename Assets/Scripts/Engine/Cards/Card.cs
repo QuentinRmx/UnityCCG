@@ -36,7 +36,7 @@ namespace Engine.Cards
 
         // CONSTRUCTOR
 
-        private Card(ICardEffect effect)
+        public Card(ICardEffect effect)
         {
             CardEffect = effect;
         }
@@ -70,54 +70,6 @@ namespace Engine.Cards
         private void Update()
         {
             OnDataChanged?.Invoke(this, null);
-        }
-
-        public static class Factory
-        {
-            /// <summary>
-            /// Create the Card instance associated to the given ID. If the ID doesn't correspond to a card then this method
-            /// returns null.
-            /// </summary>
-            /// <param name="cardId">The unique ID (positive integer) of the desired Card.</param>
-            /// <returns>The Card instance or null if the ID is not valid).</returns>
-            public static Card Create(int cardId)
-            {
-                // TODO: Refactor factory to load card data from a file.
-                CardInfo info;
-                ICardEffect effect;
-                switch (cardId)
-                {
-                    case 1:
-                        info = new CardInfo()
-                        {
-                            Attack = 0,
-                            Health = 30,
-                            MaxHealth = 30,
-                            Name = "Dark Spirit"
-                        };
-                        effect = new CardEffectAttack(ETargetSelector.AllEnemy);
-                        break;
-
-                    case 0:
-                        info = new CardInfo()
-                        {
-                            Attack = 10,
-                            Health = 1,
-                            MaxHealth = 1,
-                            Name = "ATTACK"
-                        };
-                        effect = new CardEffectAttack(ETargetSelector.AllEnemy);
-                        break;
-                    default:
-                        return null;
-                }
-
-                Card card = new Card(effect);
-                info.InstanceId = InstanceIdManager.NextInstanceId;
-                card.CardInfo = info;
-
-                return card;
-            }
         }
     }
 }

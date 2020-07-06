@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Engine.Managers;
 using UnityEngine;
 
@@ -23,15 +24,22 @@ namespace Engine.Cards.CardEffects
         /// <inheritdoc />
         public void Resolve(Card owner, CombatManager combatManager)
         {
-            List<Card> targets = combatManager.GetEnemyBoard();
+            
 
             int damage = CalculateDamage(owner);
             switch (_selector)
             {
                 case ETargetSelector.AllEnemy:
-                    targets.ForEach(t => t.DealDamage(damage));
+                    Card c;
+                    List<int> targetIds = combatManager.GetEnemyBoard().Select(ca => ca.CardInfo.InstanceId).ToList();
+                    targetIds.ForEach(id =>
+                    {
+                        c = combatManager.GetEnemyByInstanceId(id);
+                        c.DealDamage(damage);
+                    });
                     break;
                 case ETargetSelector.RandomEnemy:
+                    List<Card> targets = combatManager.GetEnemyBoard();
                     int randomTarget = Random.Range(0, targets.Count);
                     targets[randomTarget].DealDamage(damage);
                     break;

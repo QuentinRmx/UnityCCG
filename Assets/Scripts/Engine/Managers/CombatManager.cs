@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Bridges;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
+using Random = UnityEngine.Random;
 
 namespace Engine.Managers
 {
     public class CombatManager
     {
+        public event EventHandler<Card> OnCardAddedToHand;
+        
         // STATS
 
         public int NbCardsPlayed = 0;
@@ -19,6 +23,8 @@ namespace Engine.Managers
         private readonly BoardManager _boardManager;
 
         private readonly List<Card> _playerHand;
+
+        private readonly List<Card> _playerDeck;
 
         private readonly List<Card> _graveyard;
 
@@ -38,6 +44,7 @@ namespace Engine.Managers
             _boardManager = boardManager;
             _playerHand = new List<Card>();
             _graveyard = new List<Card>();
+            _playerDeck = new List<Card>();
             // TODO: Magic number.
             MaxMana = 3;
             CurrentMana = 3;
@@ -45,6 +52,20 @@ namespace Engine.Managers
         }
 
         // METHODS
+
+        public Card GetEnemyByInstanceId(int id)
+        {
+            return _boardManager.GetEnemyByInstanceId(id);
+        }
+
+        public IEnumerable<Card> GetGraveyard()
+        {
+            return _graveyard;
+        }
+        public void SetPlayerDeck(IEnumerable<Card> deck)
+        {
+            _playerDeck.AddRange(deck);
+        }
 
         public void AddEnemy(Card card)
         {
@@ -70,6 +91,7 @@ namespace Engine.Managers
         public void AddCardToHand(Card c)
         {
             _playerHand.Add(c);
+            OnCardAddedToHand?.Invoke(c, c);
         }
 
         public void PlayCardFromHand(int instanceId)
@@ -87,9 +109,23 @@ namespace Engine.Managers
 
         public void EndTurn()
         {
+            // TODO: Implement additional end of turn effects (cleaning hand?/checking active status effects).
+            _playerDeck.AddRange(_playerHand);
+            _playerDeck.AddRange(_graveyard);
+            _graveyard.Clear();
+            _playerHand.Clear();
+        }
+
+        public void StartTurn()
+        {
             CurrentMana = MaxMana;
             Turn++;
-            // TODO: Implement additional end of turn effects (cleaning hand?/checking active status effects).
+            List<Card> randomHand = _playerDeck.OrderBy(x => Random.Range(0, 100)).Take(5).ToList();
+            foreach (Card card in randomHand)
+            {
+                AddCardToHand(card);
+                _playerDeck.Remove(card);
+            }
         }
     }
 }

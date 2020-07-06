@@ -1,9 +1,6 @@
 using System;
-using Engine.Bridges;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
-using States;
-using Unity.Components;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +13,20 @@ namespace Unity.GameObjects
 
         public Image ArtworkImage;
 
+        public Text TextName;
+
 
         // METHODS
 
-        public void SetCardData(CardInfo infos)
+        protected void SetCardData(CardInfo infos)
         {
             InstanceId = infos.InstanceId;
+            TextName.text = infos.Name;
+        }
+
+        public void LoadArtwork(Sprite artworkSprite)
+        {
+            ArtworkImage.sprite = artworkSprite;
         }
 
         /// <summary>

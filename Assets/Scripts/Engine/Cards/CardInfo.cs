@@ -1,6 +1,6 @@
 using System;
 
-namespace Engine.Cards.CardEffects
+namespace Engine.Cards
 {
     [Serializable]
     public struct CardInfo
@@ -10,5 +10,7 @@ namespace Engine.Cards.CardEffects
         public int Health;
         public int Attack;
         public int MaxHealth;
+        public int Identifier;
+        public string Text;
     }
 }

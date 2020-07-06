@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Engine.Bridges;
+using Unity.GameObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,7 +35,7 @@ namespace Unity.Centers
         public GameObject EnemyBoard;
 
 
-        public GameObject[] PlayerHandInstances;
+        public List<GameObject> PlayerHandInstances = new List<GameObject>();
 
         /// <summary>
         /// Game Object that will contain the player's current hand. 
@@ -80,7 +82,7 @@ namespace Unity.Centers
 
         public void SetCardsPlayed(int amount)
         {
-            TextCardsPlayed.text = "Cards played: " + amount;
+            TextCardsPlayed.text = "Graveyard cards: " + amount;
         }
 
         public void SetCardsRerolled(int amount)
@@ -96,19 +98,27 @@ namespace Unity.Centers
             
         }
 
-        public void AddCardToHand(GameObject go)
+        public void AddCardToHand(GameObject go, int pos)
         {
             // TODO: Add spatial placement logic.
             go.transform.parent = PlayerHand.transform;
             Vector3 position = go.transform.position;
             position.z = -50;
+            position.x += 20 * pos;
             go.transform.position = position;
+            PlayerHandInstances.Add(go);
         }
 
         public void EndTurnButtonOnClick()
         {
+            // TODO: Change condition to get the information from the GameManager.
             if (TextVictory.text != "VICTORY")
             {
+                foreach (GameObject go in PlayerHandInstances)
+                {
+                    Destroy(go.gameObject);
+                }
+                PlayerHandInstances.Clear();
                 _bridge?.EndTurn();
             }
         }

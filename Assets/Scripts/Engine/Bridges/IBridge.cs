@@ -1,4 +1,5 @@
 using Engine.Cards;
+using Unity.Centers;
 
 namespace Engine.Bridges
 {
@@ -11,5 +12,9 @@ namespace Engine.Bridges
         void AddCardToPlayerHand(Card card);
 
         void EndTurn();
+        
+        void AddCardToPlayerHand(object sender, Card e);
+
+        ResourceCenter GetResourceCenter();
     }
 }

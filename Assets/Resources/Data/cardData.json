@@ -1,0 +1,20 @@
+[
+  {
+    "Identifier": 0,
+    "Name": "Black Spirit",
+    "Health": 100,
+    "MaxHealth": 100
+  },
+  {
+    "Identifier": 1,
+    "Name": "Cursed Sailor",
+    "Attack": 10,
+    "Text": "Deal 10 damage to all enemies."
+  },
+  {
+    "Identifier": 2,
+    "Name": "Cursed Captain",
+    "Attack": 25,
+    "Text": "Deal 25 damage to a random enemy."
+  }
+]

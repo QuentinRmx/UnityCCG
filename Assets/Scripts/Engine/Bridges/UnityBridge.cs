@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Cards;
@@ -11,6 +12,7 @@ namespace Engine.Bridges
 {
     public class UnityBridge : MonoBehaviour, IBridge
     {
+        
         // PRIVATE ATTRIBUTES
 
         private UICenter _uiCenter;
@@ -20,6 +22,8 @@ namespace Engine.Bridges
         private List<HandCardGameObject> _playerHand;
 
         private List<EnemyCardGameObject> _enemies;
+        
+        private ResourceCenter _resourceCenter;
 
         // PUBLIC ATTRIBUTES
 
@@ -37,6 +41,7 @@ namespace Engine.Bridges
         {
             _uiCenter = FindObjectOfType<UICenter>();
             _uiCenter.SetBridge(this);
+            _resourceCenter = FindObjectOfType<ResourceCenter>();
             _enemies = new List<EnemyCardGameObject>();
             _playerHand = new List<HandCardGameObject>();
             _gameManager = new GameManager(this);
@@ -53,7 +58,7 @@ namespace Engine.Bridges
                 _gameManager.PlayCard(instanceId);
                 // Play logic here.
                 Destroy(cardInHand.gameObject);
-                _uiCenter.SetCardsPlayed(_gameManager.CombatManager.NbCardsPlayed);
+                _uiCenter.SetCardsPlayed(_gameManager.CombatManager.GetGraveyard().Count());
                 _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
                 // TODO: Implement proper win detection.
                 if (_gameManager.CombatManager.HasWon)
@@ -108,19 +113,34 @@ namespace Engine.Bridges
             {
                 cardGo.RegisterBridge(this);
                 cardGo.SetCardData(toAdd.CardInfo);
+                cardGo.LoadArtwork(_resourceCenter.CardArtworks[toAdd.CardInfo.Identifier]);
             }
 
             toAdd.OnDataChanged += cardGo.DataChangedCardData;
             _playerHand.Add(cardGo);
-            _uiCenter.AddCardToHand(newCard);
+            _uiCenter.AddCardToHand(newCard, _playerHand.Count - 1);
         }
 
         /// <inheritdoc />
         public void EndTurn()
         {
+            _playerHand.Clear();
             _gameManager.EndTurn();
             _uiCenter.SetTurn(_gameManager.GetTurnNumber());
             _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
+        }
+
+        /// <inheritdoc />
+        public void AddCardToPlayerHand(object sender, Card e)
+        {
+            if (e != null)
+                AddCardToPlayerHand(e);
+        }
+
+        /// <inheritdoc />
+        public ResourceCenter GetResourceCenter()
+        {
+            return _resourceCenter;
         }
 
         public void AddAllCardsToPlayerHand(List<Card> toAdd)
