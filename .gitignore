@@ -20,3 +20,7 @@ Library/expandedItems
 obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
 /Logs/Packages-Update.log
 /.vscode
+/Temp/
+/obj/
+obj/Debug/Assembly-CSharp.dll
+obj/Debug/Assembly-CSharp.pdb
