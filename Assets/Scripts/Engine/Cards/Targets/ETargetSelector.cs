@@ -1,4 +1,4 @@
-namespace Engine.Cards.CardEffects
+namespace Engine.Cards.Targets
 {
     public enum ETargetSelector
     {

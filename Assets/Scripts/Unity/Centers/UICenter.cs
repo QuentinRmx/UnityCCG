@@ -25,6 +25,8 @@ namespace Unity.Centers
 
         public Text TextVictory;
 
+        public Text TextPlayerDeck;
+
         // ATTRIBUTES
 
         public GameObject[] EnemyInstances;
@@ -53,13 +55,13 @@ namespace Unity.Centers
                 TextMana.text = _manaString;
             }
         }
-        
+
         public string TextVictoryText;
 
         private IBridge _bridge;
 
         // UNITY METHODS
-        
+
         private void Start()
         {
             if (ButtonEndTurn != null)
@@ -75,6 +77,10 @@ namespace Unity.Centers
 
         // METHODS
 
+        /// <summary>
+        /// Public setter for the active bridge.
+        /// </summary>
+        /// <param name="bridge">The bridge instance to use.</param>
         public void SetBridge(IBridge bridge)
         {
             _bridge = bridge;
@@ -95,7 +101,6 @@ namespace Unity.Centers
             // TODO: Add spatial placement logic.
             go.transform.position = new Vector3(0, go.transform.position.y, 0);
             go.transform.parent = EnemyBoard.transform;
-            
         }
 
         public void AddCardToHand(GameObject go, int pos)
@@ -109,6 +114,10 @@ namespace Unity.Centers
             PlayerHandInstances.Add(go);
         }
 
+        /// <summary>
+        /// Callbacks invoked by the 'end of turn' button.
+        /// It clears the player's hand and calls the EndTurn method of the current bridge.
+        /// </summary>
         public void EndTurnButtonOnClick()
         {
             // TODO: Change condition to get the information from the GameManager.
@@ -118,24 +127,46 @@ namespace Unity.Centers
                 {
                     Destroy(go.gameObject);
                 }
+
                 PlayerHandInstances.Clear();
                 _bridge?.EndTurn();
             }
         }
 
-        public void SetTurn(int turn)
+        /// <summary>
+        /// Sets the current turn and updates the UI.
+        /// </summary>
+        /// <param name="turn">The current turn.</param>
+        public void SetCurrentTurn(int turn)
         {
             TextTurn.text = $"Turn {turn}";
         }
 
+        /// <summary>
+        /// Sets the player's current and max mana and updates the UI.
+        /// </summary>
+        /// <param name="current">The current player's mana.</param>
+        /// <param name="max">The maximum mana the player can have.</param>
         public void SetMana(int current, int max)
         {
             TextMana.text = $"{current}/{max}";
         }
 
+        /// <summary>
+        /// Displays the Victory text.
+        /// </summary>
         public void Win()
         {
             TextVictory.text = TextVictoryText;
+        }
+
+        /// <summary>
+        /// Updates the UI displaying the current deck size.
+        /// </summary>
+        /// <param name="size">The current deck's size</param>
+        public void UpdateDeckSize(int size)
+        {
+            this.TextPlayerDeck.text = $"{size}";
         }
     }
 }

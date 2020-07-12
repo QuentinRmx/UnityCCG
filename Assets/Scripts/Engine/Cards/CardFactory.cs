@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Engine.Cards.Behaviors;
+using Engine.Cards.Behaviors.Alive;
 using Engine.Cards.CardEffects;
+using Engine.Cards.Targets;
 using Engine.Utils;
 using Newtonsoft.Json;
 
@@ -40,27 +43,33 @@ namespace Engine.Cards
             // TODO: Refactor factory to load card data from a file.
             CardInfo info;
             ICardEffect effect;
+            AbstractAliveBehavior behavior;
             info = _cardInfos.FirstOrDefault(i => i.Identifier == cardId);
             // TODO: Serialize effects.
             switch (cardId)
             {
                 case 0:
                     effect = new CardEffectNone();
+                    behavior = new AliveBehavior();
                     break;
                 case 1:
                     effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
+                    behavior = new NotAliveBehavior();
                     break;
                 case 2:
                     effect = new CardEffectAttack(ETargetSelector.AllEnemy);
+                    behavior = new NotAliveBehavior();
                     break;
                 case 3:
                     effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
+                    behavior = new NotAliveBehavior();
                     break;
                 default:
+                    behavior = new NotAliveBehavior();
                     return null;
             }
 
-            Card card = new Card(effect);
+            Card card = new Card(effect) {AliveBehavior = behavior};
             info.InstanceId = InstanceIdManager.NextInstanceId;
             card.CardInfo = info;
 

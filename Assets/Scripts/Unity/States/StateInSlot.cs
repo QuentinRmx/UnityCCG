@@ -1,4 +1,4 @@
-namespace States
+namespace Unity.States
 {
     public class StateInSlot : State
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace States
+namespace Unity.States
 {
     [Serializable]
     public class StateHovered : State

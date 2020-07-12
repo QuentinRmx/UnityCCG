@@ -20,25 +20,31 @@ namespace Engine.Managers
         public GameManager(IBridge bridge)
         {
             _bridge = bridge;
-            CombatManager = new CombatManager(new BoardManager());
-            CombatManager.OnCardAddedToHand += _bridge.AddCardToPlayerHand;
 
+            CombatManager = new CombatManager(new BoardManager());
+            CombatManager.OnCurrentManaChanged += _bridge.OnCurrentManaChange;
+            CombatManager.OnCardAddedToHand += _bridge.AddCardToPlayerHand;
+            CombatManager.OnDeckChanged += _bridge.OnDeckChange;
+        }
+
+        public void Init()
+        {
             // TODO: Load enemies.
             AddEnemy(CardFactory.Instance.Create(0));
 
             // TODO: Load player hand.
             List<Card> deckTest = new List<Card>
             {
-                CardFactory.Instance.Create(1), 
-                CardFactory.Instance.Create(1), 
-                CardFactory.Instance.Create(1), 
+                CardFactory.Instance.Create(1),
+                CardFactory.Instance.Create(1),
+                CardFactory.Instance.Create(1),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(3),
             };
             CombatManager.SetPlayerDeck(deckTest);
-            CombatManager.StartTurn();
+            CombatManager.StartPlayerTurn();
         }
 
         // METHODS
@@ -48,10 +54,9 @@ namespace Engine.Managers
             CombatManager.PlayCardFromHand(instanceId);
         }
 
-        public void RerollCard(Card card)
+        public void RerollCard(int instanceId)
         {
-            card.Reroll(CombatManager);
-            // TODO: Notify board that the card needs to be removed from hand and put into sanctuary.
+            CombatManager.RerollCardInHand(instanceId);
             CombatManager.NbCardsRerolled++;
         }
 
@@ -61,12 +66,6 @@ namespace Engine.Managers
             _bridge?.AddEnemy(card);
         }
 
-//        public void AddCardToHand(Card card)
-//        {
-//            CombatManager?.AddCardToHand(card);
-//            _bridge?.AddCardToPlayerHand(card);
-//        }
-
         public void RemoveEnemy(Card card)
         {
             CombatManager.RemoveEnemy(card);
@@ -74,14 +73,19 @@ namespace Engine.Managers
 
         public void EndTurn()
         {
-            CombatManager.EndTurn();
+            CombatManager.EndPlayerTurn();
             // TODO: Add enemy turn logic here.
-            CombatManager.StartTurn();
+            CombatManager.StartPlayerTurn();
         }
 
         public int GetTurnNumber()
         {
-            return CombatManager.Turn;
+            return CombatManager.CurrentTurn;
+        }
+
+        public int GetCurrentMana()
+        {
+            return CombatManager.CurrentMana;
         }
     }
 }

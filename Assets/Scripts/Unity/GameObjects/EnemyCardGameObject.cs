@@ -1,6 +1,5 @@
 using System;
 using Engine.Cards;
-using Engine.Cards.CardEffects;
 using UnityEngine.UI;
 
 namespace Unity.GameObjects

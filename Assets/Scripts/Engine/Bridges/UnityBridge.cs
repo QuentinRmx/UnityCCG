@@ -12,7 +12,6 @@ namespace Engine.Bridges
 {
     public class UnityBridge : MonoBehaviour, IBridge
     {
-        
         // PRIVATE ATTRIBUTES
 
         private UICenter _uiCenter;
@@ -22,14 +21,10 @@ namespace Engine.Bridges
         private List<HandCardGameObject> _playerHand;
 
         private List<EnemyCardGameObject> _enemies;
-        
+
         private ResourceCenter _resourceCenter;
 
         // PUBLIC ATTRIBUTES
-
-        public CardGameObject[] Enemies = new CardGameObject[8];
-
-        public CardGameObject[] PlayerHandArray;
 
         public GameObject CardGameObjectPrefab;
 
@@ -45,21 +40,25 @@ namespace Engine.Bridges
             _enemies = new List<EnemyCardGameObject>();
             _playerHand = new List<HandCardGameObject>();
             _gameManager = new GameManager(this);
+
+            _gameManager.Init();
         }
 
 
         // REQUESTS FROM UI TO GAME MANAGER.
 
-        public void PlayCard(int instanceId)
+        public void PlayCardFromHand(int instanceId)
         {
+            if (_gameManager.GetCurrentMana() <= 0)
+                return;
             HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
             if (cardInHand != null)
             {
                 _gameManager.PlayCard(instanceId);
                 // Play logic here.
+                _playerHand.Remove(cardInHand);
                 Destroy(cardInHand.gameObject);
                 _uiCenter.SetCardsPlayed(_gameManager.CombatManager.GetGraveyard().Count());
-                _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
                 // TODO: Implement proper win detection.
                 if (_gameManager.CombatManager.HasWon)
                 {
@@ -70,11 +69,15 @@ namespace Engine.Bridges
 
         public void RerollCard(int instanceId)
         {
-            CardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
+            if (_gameManager.GetCurrentMana() <= 0)
+                return;
+            HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
 
             if (cardInHand != null)
             {
                 // Reroll logic here.
+                _gameManager.RerollCard(cardInHand.InstanceId);
+                _playerHand.Remove(cardInHand);
                 Destroy(cardInHand.gameObject);
             }
         }
@@ -105,20 +108,21 @@ namespace Engine.Bridges
         /// Add a CardGameObject to the scene corresponding to a card in the player's hand.
         /// </summary>
         /// <param name="toAdd">The Card added to the hand for which we need to create a GameObject.</param>
-        public void AddCardToPlayerHand(Card toAdd)
+        /// <param name="position">The position to add the card at.</param>
+        public void AddCardToPlayerHand(Card toAdd, int position)
         {
             GameObject newCard = Instantiate(CardGameObjectPrefab);
             HandCardGameObject cardGo = newCard.GetComponent<HandCardGameObject>();
             if (cardGo != null)
             {
-                cardGo.RegisterBridge(this);
                 cardGo.SetCardData(toAdd.CardInfo);
+                cardGo.RegisterBridge(this);
                 cardGo.LoadArtwork(_resourceCenter.CardArtworks[toAdd.CardInfo.Identifier]);
             }
 
             toAdd.OnDataChanged += cardGo.DataChangedCardData;
             _playerHand.Add(cardGo);
-            _uiCenter.AddCardToHand(newCard, _playerHand.Count - 1);
+            _uiCenter.AddCardToHand(newCard, position);
         }
 
         /// <inheritdoc />
@@ -126,26 +130,25 @@ namespace Engine.Bridges
         {
             _playerHand.Clear();
             _gameManager.EndTurn();
-            _uiCenter.SetTurn(_gameManager.GetTurnNumber());
-            _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
+            _uiCenter.SetCurrentTurn(_gameManager.GetTurnNumber());
         }
 
         /// <inheritdoc />
-        public void AddCardToPlayerHand(object sender, Card e)
+        public void AddCardToPlayerHand(object sender, int position)
         {
-            if (e != null)
-                AddCardToPlayerHand(e);
+            AddCardToPlayerHand(_gameManager.CombatManager.GetPlayerHand()[position], position);
         }
 
         /// <inheritdoc />
-        public ResourceCenter GetResourceCenter()
+        public void OnDeckChange(object sender, Card e)
         {
-            return _resourceCenter;
+            _uiCenter.UpdateDeckSize(_gameManager.CombatManager.GetPlayerDeckSize());
         }
 
-        public void AddAllCardsToPlayerHand(List<Card> toAdd)
+        /// <inheritdoc />
+        public void OnCurrentManaChange(object sender, int amount)
         {
-            toAdd.ForEach(AddCardToPlayerHand);
+            _uiCenter.SetMana(amount, _gameManager.CombatManager.MaxMana);
         }
     }
 }
