@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Engine.Bridges;
 using Unity.GameObjects;
 using UnityEngine;
@@ -26,6 +27,8 @@ namespace Unity.Centers
         public Text TextVictory;
 
         public Text TextPlayerDeck;
+
+        public Text TextPlayerHealth;
 
         // ATTRIBUTES
 
@@ -57,6 +60,8 @@ namespace Unity.Centers
         }
 
         public string TextVictoryText;
+
+        public string TextLoseText;
 
         private IBridge _bridge;
 
@@ -121,7 +126,7 @@ namespace Unity.Centers
         public void EndTurnButtonOnClick()
         {
             // TODO: Change condition to get the information from the GameManager.
-            if (TextVictory.text != "VICTORY")
+            if (TextVictory.text == "")
             {
                 foreach (GameObject go in PlayerHandInstances)
                 {
@@ -160,6 +165,11 @@ namespace Unity.Centers
             TextVictory.text = TextVictoryText;
         }
 
+        public void Lose()
+        {
+            TextVictory.text = TextLoseText;
+        }
+
         /// <summary>
         /// Updates the UI displaying the current deck size.
         /// </summary>
@@ -167,6 +177,11 @@ namespace Unity.Centers
         public void UpdateDeckSize(int size)
         {
             this.TextPlayerDeck.text = $"{size}";
+        }
+
+        public void UpdateHealthText(int current, int max)
+        {
+            TextPlayerHealth.text = $"{current}/{max}";
         }
     }
 }

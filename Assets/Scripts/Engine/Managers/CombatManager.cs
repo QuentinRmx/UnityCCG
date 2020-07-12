@@ -18,7 +18,11 @@ namespace Engine.Managers
     /// </summary>
     public class CombatManager
     {
+        // CONSTANTS
+
         public const int PLAYER_HAND_SIZE = 5;
+
+        // EVENTS
 
         /// <summary>
         /// Raised when a Card is added to the player's hand. The argument is the position of the card.
@@ -41,11 +45,12 @@ namespace Engine.Managers
         /// </summary>
         public event EventHandler<int> OnCurrentManaChanged;
 
-        // STATS
+        public event EventHandler<int> OnCurrentHealthChanged;
 
-        public int NbCardsPlayed = 0;
+        public event EventHandler<int> OnMaxHealthChanged;
 
-        public int NbCardsRerolled = 0;
+        public event EventHandler OnPlayerDefeated;
+
 
         // ATTRIBUTES
 
@@ -74,9 +79,45 @@ namespace Engine.Managers
 
         public int MaxMana { get; private set; }
 
+        private int _currentHealth;
+
+        public int CurrentHealth
+        {
+            get => _currentHealth;
+            set
+            {
+                _currentHealth = value;
+                OnCurrentHealthChanged?.Invoke(this, _currentHealth);
+                if (_currentHealth <= 0)
+                {
+                    OnPlayerDefeated?.Invoke(this, null);
+                }
+            }
+        }
+
+        private int _maxHealth;
+
+        public int MaxHealth
+        {
+            get => _maxHealth;
+            set
+            {
+                _maxHealth = value;
+                OnMaxHealthChanged?.Invoke(this, _maxHealth);
+            }
+        }
+
         public int CurrentTurn { get; set; }
 
+
+        // STATS
+
+        public int NbCardsPlayed { get; set; } = 0;
+
+        public int NbCardsRerolled { get; set; } = 0;
+
         public bool HasWon => _boardManager.GetEnemiesCount() <= 0;
+        public bool HasLost => CurrentHealth <= 0;
 
         // CONSTRUCTOR
 
@@ -86,6 +127,8 @@ namespace Engine.Managers
             // TODO: Magic number.
             MaxMana = 3;
             CurrentMana = 3;
+            CurrentHealth = 100;
+            MaxHealth = 100;
             CurrentTurn = 1;
         }
 
@@ -185,10 +228,16 @@ namespace Engine.Managers
             // TODO: Implement additional end of turn effects (cleaning hand?/checking active status effects).
             _graveyard.AddRange(_playerHand);
             ClearPlayerHand();
+            StartEnemyTurn();
         }
 
         public void StartEnemyTurn()
         {
+            List<Card> enemies = GetEnemyBoard();
+            foreach (Card enemy in enemies)
+            {
+                enemy.Play(this);
+            }
         }
 
         public void EndEnemyTurn()
@@ -277,6 +326,5 @@ namespace Engine.Managers
                 _playerHand[pos] = null;
             }
         }
-        
     }
 }

@@ -1,0 +1,38 @@
+using Engine.Managers;
+using Newtonsoft.Json;
+
+namespace Engine.Cards.CardEffects
+{
+    [JsonObject]
+    public class CardEffectIdle : AbstractCardEffect
+    {
+        // ATTRIBUTES
+
+        // CONSTRUCTORS
+
+        /// <inheritdoc />
+        public CardEffectIdle(int effectIdentifier) : base(effectIdentifier)
+        {
+        }
+
+        // METHODS
+
+
+        /// <inheritdoc />
+        public override void Resolve(Card owner, CombatManager combatManager)
+        {
+        }
+
+        /// <inheritdoc />
+        public override AbstractCardEffect GetNext()
+        {
+            return null;
+        }
+
+        /// <inheritdoc />
+        public override string GetDescription(Card card, CombatManager manager)
+        {
+            return "Idle";
+        }
+    }
+}

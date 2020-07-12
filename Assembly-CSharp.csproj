@@ -67,8 +67,11 @@
     <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\IBehavior.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Targetable\AbstractTargetableBehavior.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\Card.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\AbstractCardEffect.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectAttack.cs" />
-    <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectNone.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectFactory.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectIdle.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectPool.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\ICardEffect.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardFactory.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardInfo.cs" />

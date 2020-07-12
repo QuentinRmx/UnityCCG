@@ -12,5 +12,6 @@ namespace Engine.Cards
         public int MaxHealth;
         public int Identifier;
         public string Text;
+        public int CardEffectAssociated;
     }
 }

@@ -25,10 +25,14 @@ namespace Engine.Managers
             CombatManager.OnCurrentManaChanged += _bridge.OnCurrentManaChange;
             CombatManager.OnCardAddedToHand += _bridge.AddCardToPlayerHand;
             CombatManager.OnDeckChanged += _bridge.OnDeckChange;
+            CombatManager.OnCurrentHealthChanged += bridge.OnCurrentHealthChange;
+            CombatManager.OnMaxHealthChanged += bridge.OnMaxHealthChange;
+            CombatManager.OnPlayerDefeated += bridge.OnPlayerDefeat;
         }
 
         public void Init()
         {
+            
             // TODO: Load enemies.
             AddEnemy(CardFactory.Instance.Create(0));
 

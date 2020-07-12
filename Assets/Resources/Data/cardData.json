@@ -3,24 +3,29 @@
     "Identifier": 0,
     "Name": "Black Spirit",
     "Health": 100,
-    "MaxHealth": 100
+    "MaxHealth": 100,
+    "Attack": 10,
+    "CardEffectAssociated": 1
   },
   {
     "Identifier": 1,
     "Name": "Cursed Sailor",
     "Attack": 10,
-    "Text": "Deal 10 damage to all enemies."
+    "Text": "Deal 10 damage to all enemies.",
+    "CardEffectAssociated": 3
   },
   {
     "Identifier": 2,
     "Name": "Cursed Captain",
     "Attack": 25,
-    "Text": "Deal 25 damage to a random enemy."
+    "Text": "Deal 25 damage to a random enemy.",
+    "CardEffectAssociated": 4
   },
   {
     "Identifier": 3,
     "Name": "Ship Devourer",
     "Attack": 50,
-    "Text": "Deal 50 damage to a random enemy."
+    "Text": "Deal 50 damage to a random enemy.",
+    "CardEffectAssociated": 4
   }
 ]

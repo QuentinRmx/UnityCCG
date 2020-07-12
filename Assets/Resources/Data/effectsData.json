@@ -1,0 +1,43 @@
+{
+  "$type": "Engine.Cards.CardEffects.AbstractCardEffect[], Assembly-CSharp",
+  "$values": [
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectPool, Assembly-CSharp",
+      "Pool": {
+        "$type": "Engine.Cards.CardEffects.AbstractCardEffect[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Engine.Cards.CardEffects.CardEffectIdle, Assembly-CSharp",
+            "EffectIdentifier": 1,
+            "NextEffect": null
+          },
+          {
+            "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
+            "_selector": 2,
+            "EffectIdentifier": 2,
+            "NextEffect": null
+          }
+        ]
+      },
+      "EffectIdentifier": 0,
+      "NextEffect": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectIdle, Assembly-CSharp",
+      "EffectIdentifier": 1,
+      "NextEffect": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
+      "_selector": 2,
+      "EffectIdentifier": 2,
+      "NextEffect": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
+      "_selector": 0,
+      "EffectIdentifier": 3,
+      "NextEffect": null
+    }
+  ]
+}

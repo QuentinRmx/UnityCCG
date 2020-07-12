@@ -25,6 +25,9 @@ namespace Engine.Cards
         /// Raised when the Card is killed (i.e its health value is reduced down to 0 or below).
         /// </summary>
         public event EventHandler<Card> OnDeath;
+        
+        
+        public event EventHandler<string> OnNextActionPicked;
 
         // STATIC
 
@@ -33,7 +36,7 @@ namespace Engine.Cards
 
         public CardInfo CardInfo;
 
-        public readonly ICardEffect CardEffect;
+        public readonly AbstractCardEffect CardEffect;
 
         private AbstractAliveBehavior _aliveBehavior;
 
@@ -50,7 +53,7 @@ namespace Engine.Cards
 
         // CONSTRUCTOR
 
-        public Card(ICardEffect effect)
+        public Card(AbstractCardEffect effect)
         {
             CardEffect = effect;
         }
@@ -58,6 +61,7 @@ namespace Engine.Cards
         public void Play(CombatManager cm)
         {
             CardEffect.Resolve(this, cm);
+            OnNextActionPicked?.Invoke(this, CardEffect.GetNext().GetDescription(this, cm));
         }
 
         public void Reroll(CombatManager cm)

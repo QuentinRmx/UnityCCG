@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Engine.Cards.Behaviors;
 using Engine.Cards.Behaviors.Alive;
 using Engine.Cards.CardEffects;
 using Engine.Cards.Targets;
@@ -41,27 +40,26 @@ namespace Engine.Cards
         public Card Create(int cardId)
         {
             // TODO: Refactor factory to load card data from a file.
+//            CardEffectFactory.Instance.Serialize();
+            
             CardInfo info;
-            ICardEffect effect;
+
             AbstractAliveBehavior behavior;
             info = _cardInfos.FirstOrDefault(i => i.Identifier == cardId);
+            AbstractCardEffect effect = CardEffectFactory.Instance.Create(info.CardEffectAssociated);
             // TODO: Serialize effects.
             switch (cardId)
             {
                 case 0:
-                    effect = new CardEffectNone();
                     behavior = new AliveBehavior();
                     break;
                 case 1:
-                    effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
                     behavior = new NotAliveBehavior();
                     break;
                 case 2:
-                    effect = new CardEffectAttack(ETargetSelector.AllEnemy);
                     behavior = new NotAliveBehavior();
                     break;
                 case 3:
-                    effect = new CardEffectAttack(ETargetSelector.RandomEnemy);
                     behavior = new NotAliveBehavior();
                     break;
                 default:

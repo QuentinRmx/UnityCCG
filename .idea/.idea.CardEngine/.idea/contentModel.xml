@@ -29,8 +29,11 @@
               </e>
               <e p="Card.cs" t="Include" />
               <e p="CardEffects" t="Include">
+                <e p="AbstractCardEffect.cs" t="Include" />
                 <e p="CardEffectAttack.cs" t="Include" />
-                <e p="CardEffectNone.cs" t="Include" />
+                <e p="CardEffectFactory.cs" t="Include" />
+                <e p="CardEffectIdle.cs" t="Include" />
+                <e p="CardEffectPool.cs" t="Include" />
                 <e p="ICardEffect.cs" t="Include" />
               </e>
               <e p="CardFactory.cs" t="Include" />

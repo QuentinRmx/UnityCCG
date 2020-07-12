@@ -49,7 +49,7 @@ namespace Engine.Bridges
 
         public void PlayCardFromHand(int instanceId)
         {
-            if (_gameManager.GetCurrentMana() <= 0)
+            if (_gameManager.GetCurrentMana() <= 0 || _gameManager.CombatManager.HasWon || _gameManager.CombatManager.HasLost)
                 return;
             HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
             if (cardInHand != null)
@@ -92,6 +92,7 @@ namespace Engine.Bridges
             EnemyCardGameObject cardGameObject = enemyGo.GetComponent<EnemyCardGameObject>();
             cardGameObject.SetCardData(enemy.CardInfo);
             enemy.OnDataChanged += cardGameObject.DataChangedCardData;
+            enemy.OnNextActionPicked += cardGameObject.SetNextAction;
             _enemies.Add(cardGameObject);
             _uiCenter.AddEnemy(enemyGo);
         }
@@ -149,6 +150,24 @@ namespace Engine.Bridges
         public void OnCurrentManaChange(object sender, int amount)
         {
             _uiCenter.SetMana(amount, _gameManager.CombatManager.MaxMana);
+        }
+
+        /// <inheritdoc />
+        public void OnMaxHealthChange(object sender, int currentHealth)
+        {
+            _uiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth, _gameManager.CombatManager.MaxHealth);
+        }
+
+        /// <inheritdoc />
+        public void OnCurrentHealthChange(object sender, int maxHealth)
+        {
+            _uiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth,  _gameManager.CombatManager.MaxHealth);
+        }
+
+        /// <inheritdoc />
+        public void OnPlayerDefeat(object sender, EventArgs e)
+        {
+            _uiCenter.Lose();
         }
     }
 }
