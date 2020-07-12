@@ -166,7 +166,7 @@ namespace Unity.Centers
         /// <param name="size">The current deck's size</param>
         public void UpdateDeckSize(int size)
         {
-            this.TextPlayerDeck.text = $"Player deck : " + size;
+            this.TextPlayerDeck.text = $"{size}";
         }
     }
 }

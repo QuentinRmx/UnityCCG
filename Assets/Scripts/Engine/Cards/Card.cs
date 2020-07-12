@@ -62,7 +62,7 @@ namespace Engine.Cards
 
         public void Reroll(CombatManager cm)
         {
-//            Debug.Log("Card:Reroll");
+            // TODO: Implements RerollBehavior and use it here.
         }
 
 

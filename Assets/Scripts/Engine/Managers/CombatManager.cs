@@ -36,6 +36,11 @@ namespace Engine.Managers
         /// </summary>
         public event EventHandler<Card> OnEnemyAdded;
 
+        /// <summary>
+        /// Raised when the current amount of mana is updated.
+        /// </summary>
+        public event EventHandler<int> OnCurrentManaChanged;
+
         // STATS
 
         public int NbCardsPlayed = 0;
@@ -54,7 +59,18 @@ namespace Engine.Managers
         private readonly List<Card> _graveyard = new List<Card>();
 
         // TODO: Refactor mana in a player class.
-        public int CurrentMana { get; private set; }
+
+        private int _currentMana;
+
+        public int CurrentMana
+        {
+            get => _currentMana;
+            set
+            {
+                _currentMana = value;
+                OnCurrentManaChanged?.Invoke(this, _currentMana);
+            }
+        }
 
         public int MaxMana { get; private set; }
 
@@ -155,7 +171,6 @@ namespace Engine.Managers
                 NbCardsPlayed++;
                 CurrentMana--;
                 DrawRandomCard(pos);
-                OnDeckChanged?.Invoke(this, card);
             }
         }
 
@@ -223,12 +238,15 @@ namespace Engine.Managers
             OnDeckChanged?.Invoke(this, c);
         }
 
-        public void RerollCardInHand(Card card)
+        public void RerollCardInHand(int instanceId)
         {
+            Card card = _playerHand.First(c => c.CardInfo.InstanceId == instanceId);
             card.Reroll(this);
             int position = _playerHand.IndexOf(card);
+            _graveyard.Add(card);
             _playerHand[position] = null;
             DrawRandomCard(position);
+            CurrentMana--;
         }
 
         public void ShuffleGraveyardIntoDeck()

@@ -9,12 +9,14 @@ namespace Engine.Bridges
 
         void AddEnemy(Card enemy);
 
-//        void AddCardToPlayerHand(Card card, int position);
+        void AddCardToPlayerHand(object sender, int position);
 
         void EndTurn();
         
-        void AddCardToPlayerHand(object sender, int position);
+//        void AddCardToPlayerHand(object sender, int position);
 
         void OnDeckChange(object sender, Card e);
+
+        void OnCurrentManaChange(object sender, int amount);
     }
 }

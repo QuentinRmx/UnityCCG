@@ -14,16 +14,31 @@
               <e p="UnityBridge.cs" t="Include" />
             </e>
             <e p="Cards" t="Include">
+              <e p="Behaviors" t="Include">
+                <e p="AbstractBehavior.cs" t="Include" />
+                <e p="Alive" t="Include">
+                  <e p="AbstractAliveBehavior.cs" t="Include" />
+                  <e p="AliveBehavior.cs" t="Include" />
+                  <e p="NotAliveBehavior.cs" t="Include" />
+                </e>
+                <e p="BehaviorFactory.cs" t="Include" />
+                <e p="IBehavior.cs" t="Include" />
+                <e p="Targetable" t="Include">
+                  <e p="AbstractTargetableBehavior.cs" t="Include" />
+                </e>
+              </e>
               <e p="Card.cs" t="Include" />
               <e p="CardEffects" t="Include">
                 <e p="CardEffectAttack.cs" t="Include" />
                 <e p="CardEffectNone.cs" t="Include" />
-                <e p="ETargetSelector.cs" t="Include" />
                 <e p="ICardEffect.cs" t="Include" />
               </e>
               <e p="CardFactory.cs" t="Include" />
               <e p="CardInfo.cs" t="Include" />
               <e p="IPlayable.cs" t="Include" />
+              <e p="Targets" t="Include">
+                <e p="ETargetSelector.cs" t="Include" />
+              </e>
             </e>
             <e p="Communication" t="Include">
               <e p="IAction.cs" t="Include" />
@@ -35,6 +50,7 @@
               <e p="GameManager.cs" t="Include" />
             </e>
             <e p="Utils" t="Include">
+              <e p="CardArrayExtensions.cs" t="Include" />
               <e p="InstanceIdManager.cs" t="Include" />
             </e>
           </e>
