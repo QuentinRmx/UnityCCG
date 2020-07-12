@@ -17,3 +17,6 @@ Library/assetDatabase3
 Library/CurrentLayout.dwlt
 Library/CurrentMaximizeLayout.dwlt
 Library/expandedItems
+obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+/Logs/Packages-Update.log
+/.vscode
