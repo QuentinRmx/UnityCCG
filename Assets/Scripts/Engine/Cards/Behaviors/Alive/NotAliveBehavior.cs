@@ -1,8 +1,7 @@
-namespace Engine.Cards.Behaviors
+namespace Engine.Cards.Behaviors.Alive
 {
     public class NotAliveBehavior : AbstractAliveBehavior
     {
-
         // ATTRIBUTES
 
         // CONSTRUCTORS
@@ -12,6 +11,12 @@ namespace Engine.Cards.Behaviors
 
         /// <inheritdoc />
         public override bool TakeDamage(int damage)
+        {
+            return false;
+        }
+
+        /// <inheritdoc />
+        public override bool Heal(int healAmount)
         {
             return false;
         }

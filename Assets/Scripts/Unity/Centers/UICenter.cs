@@ -25,6 +25,8 @@ namespace Unity.Centers
 
         public Text TextVictory;
 
+        public Text TextPlayerDeck;
+
         // ATTRIBUTES
 
         public GameObject[] EnemyInstances;
@@ -53,13 +55,13 @@ namespace Unity.Centers
                 TextMana.text = _manaString;
             }
         }
-        
+
         public string TextVictoryText;
 
         private IBridge _bridge;
 
         // UNITY METHODS
-        
+
         private void Start()
         {
             if (ButtonEndTurn != null)
@@ -99,7 +101,6 @@ namespace Unity.Centers
             // TODO: Add spatial placement logic.
             go.transform.position = new Vector3(0, go.transform.position.y, 0);
             go.transform.parent = EnemyBoard.transform;
-            
         }
 
         public void AddCardToHand(GameObject go, int pos)
@@ -126,6 +127,7 @@ namespace Unity.Centers
                 {
                     Destroy(go.gameObject);
                 }
+
                 PlayerHandInstances.Clear();
                 _bridge?.EndTurn();
             }
@@ -156,6 +158,15 @@ namespace Unity.Centers
         public void Win()
         {
             TextVictory.text = TextVictoryText;
+        }
+
+        /// <summary>
+        /// Updates the UI displaying the current deck size.
+        /// </summary>
+        /// <param name="size">The current deck's size</param>
+        public void UpdateDeckSize(int size)
+        {
+            this.TextPlayerDeck.text = $"Player deck : " + size;
         }
     }
 }

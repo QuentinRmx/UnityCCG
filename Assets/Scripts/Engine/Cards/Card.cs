@@ -1,5 +1,6 @@
 using System;
 using Engine.Cards.Behaviors;
+using Engine.Cards.Behaviors.Alive;
 using Engine.Cards.CardEffects;
 using Engine.Managers;
 using Engine.Utils;
@@ -33,7 +34,7 @@ namespace Engine.Cards
         public CardInfo CardInfo;
 
         public readonly ICardEffect CardEffect;
-        
+
         private AbstractAliveBehavior _aliveBehavior;
 
         public AbstractAliveBehavior AliveBehavior
@@ -61,7 +62,7 @@ namespace Engine.Cards
 
         public void Reroll(CombatManager cm)
         {
-            Debug.Log("Card:Reroll");
+//            Debug.Log("Card:Reroll");
         }
 
 
@@ -70,14 +71,12 @@ namespace Engine.Cards
         /// </summary>
         /// <param name="damage">Damage to inflict to this card.</param>
         /// <returns>The new life total.</returns>
-        public void DealDamage(int damage)
+        public void TakeDamage(int damage)
         {
-            
             if (AliveBehavior.TakeDamage(damage))
             {
                 OnDeath?.Invoke(this, this);
             }
-            
         }
 
         public void Update()

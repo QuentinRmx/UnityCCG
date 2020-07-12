@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace States
+namespace Unity.States
 {
     public interface IStateMachine
     {

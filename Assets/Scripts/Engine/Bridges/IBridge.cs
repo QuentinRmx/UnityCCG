@@ -5,16 +5,16 @@ namespace Engine.Bridges
 {
     public interface IBridge
     {
-        void PlayCard(int instanceId);
+        void PlayCardFromHand(int instanceId);
 
         void AddEnemy(Card enemy);
 
-        void AddCardToPlayerHand(Card card);
+//        void AddCardToPlayerHand(Card card, int position);
 
         void EndTurn();
         
-        void AddCardToPlayerHand(object sender, Card e);
+        void AddCardToPlayerHand(object sender, int position);
 
-        ResourceCenter GetResourceCenter();
+        void OnDeckChange(object sender, Card e);
     }
 }

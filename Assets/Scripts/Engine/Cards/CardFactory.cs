@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Engine.Cards.Behaviors;
+using Engine.Cards.Behaviors.Alive;
 using Engine.Cards.CardEffects;
+using Engine.Cards.Targets;
 using Engine.Utils;
 using Newtonsoft.Json;
 

@@ -2,8 +2,8 @@ using System;
 using Engine.Bridges;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
-using States;
 using Unity.Components;
+using Unity.States;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,7 +89,7 @@ namespace Unity.GameObjects
 
             if (_draggingComponent != null)
             {
-                _draggingComponent.OnDragForwardSuccessful += (sender, args) => ub.PlayCard(InstanceId);
+                _draggingComponent.OnDragForwardSuccessful += (sender, args) => ub.PlayCardFromHand(InstanceId);
                 _draggingComponent.OnDragBackwardSuccessful += (sender, args) => ub.RerollCard(InstanceId);
             }
         }
