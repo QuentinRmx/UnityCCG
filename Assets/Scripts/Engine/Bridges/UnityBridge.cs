@@ -126,7 +126,7 @@ namespace Engine.Bridges
         {
             _playerHand.Clear();
             _gameManager.EndTurn();
-            _uiCenter.SetTurn(_gameManager.GetTurnNumber());
+            _uiCenter.SetCurrentTurn(_gameManager.GetTurnNumber());
             _uiCenter.SetMana(_gameManager.CombatManager.CurrentMana, _gameManager.CombatManager.MaxMana);
         }
 

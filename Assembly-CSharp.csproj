@@ -59,6 +59,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Engine\Bridges\IBridge.cs" />
     <Compile Include="Assets\Scripts\Engine\Bridges\UnityBridge.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Alive\AbstractAliveBehavior.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Alive\AbstractBehavior.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Alive\NotAliveBehavior.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\AliveBehavior.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\BehaviorFactory.cs" />
+    <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\IBehavior.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\Card.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectAttack.cs" />
     <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectNone.cs" />
