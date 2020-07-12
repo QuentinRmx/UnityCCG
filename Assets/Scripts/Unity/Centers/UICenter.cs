@@ -75,6 +75,10 @@ namespace Unity.Centers
 
         // METHODS
 
+        /// <summary>
+        /// Public setter for the active bridge.
+        /// </summary>
+        /// <param name="bridge">The bridge instance to use.</param>
         public void SetBridge(IBridge bridge)
         {
             _bridge = bridge;
@@ -109,6 +113,10 @@ namespace Unity.Centers
             PlayerHandInstances.Add(go);
         }
 
+        /// <summary>
+        /// Callbacks invoked by the 'end of turn' button.
+        /// It clears the player's hand and calls the EndTurn method of the current bridge.
+        /// </summary>
         public void EndTurnButtonOnClick()
         {
             // TODO: Change condition to get the information from the GameManager.
@@ -123,16 +131,28 @@ namespace Unity.Centers
             }
         }
 
-        public void SetTurn(int turn)
+        /// <summary>
+        /// Sets the current turn and updates the UI.
+        /// </summary>
+        /// <param name="turn">The current turn.</param>
+        public void SetCurrentTurn(int turn)
         {
             TextTurn.text = $"Turn {turn}";
         }
 
+        /// <summary>
+        /// Sets the player's current and max mana and updates the UI.
+        /// </summary>
+        /// <param name="current">The current player's mana.</param>
+        /// <param name="max">The maximum mana the player can have.</param>
         public void SetMana(int current, int max)
         {
             TextMana.text = $"{current}/{max}";
         }
 
+        /// <summary>
+        /// Displays the Victory text.
+        /// </summary>
         public void Win()
         {
             TextVictory.text = TextVictoryText;

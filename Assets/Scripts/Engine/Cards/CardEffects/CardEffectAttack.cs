@@ -24,8 +24,6 @@ namespace Engine.Cards.CardEffects
         /// <inheritdoc />
         public void Resolve(Card owner, CombatManager combatManager)
         {
-            
-
             int damage = CalculateDamage(owner);
             switch (_selector)
             {
@@ -35,15 +33,13 @@ namespace Engine.Cards.CardEffects
                     targetIds.ForEach(id =>
                     {
                         c = combatManager.GetEnemyByInstanceId(id);
-                        c.DealDamage(damage);
+                        c.AliveBehavior.TakeDamage(damage);
                     });
                     break;
                 case ETargetSelector.RandomEnemy:
                     List<Card> targets = combatManager.GetEnemyBoard();
                     int randomTarget = Random.Range(0, targets.Count);
-                    targets[randomTarget].DealDamage(damage);
-                    break;
-                default:
+                    targets[randomTarget].AliveBehavior.TakeDamage(damage);
                     break;
             }
         }
