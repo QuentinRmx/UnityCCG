@@ -1020,11 +1020,13 @@ MonoBehaviour:
   TextTurn: {fileID: 727278833}
   TextVictory: {fileID: 2022245276}
   TextPlayerDeck: {fileID: 7737108611168838114}
+  TextPlayerHealth: {fileID: 3918960657741931254}
   EnemyInstances: []
   EnemyBoard: {fileID: 0}
   PlayerHandInstances: []
   PlayerHand: {fileID: 0}
   TextVictoryText: VICTORY
+  TextLoseText: DEFEAT
 --- !u!114 &183035105
 MonoBehaviour:
   m_ObjectHideFlags: 0

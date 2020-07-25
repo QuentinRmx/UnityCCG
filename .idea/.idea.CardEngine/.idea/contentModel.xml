@@ -29,12 +29,18 @@
               </e>
               <e p="Card.cs" t="Include" />
               <e p="CardEffects" t="Include">
+                <e p="AbstractCardEffect.cs" t="Include" />
                 <e p="CardEffectAttack.cs" t="Include" />
-                <e p="CardEffectNone.cs" t="Include" />
+                <e p="CardEffectCriticalStrike.cs" t="Include" />
+                <e p="CardEffectFactory.cs" t="Include" />
+                <e p="CardEffectHeal.cs" t="Include" />
+                <e p="CardEffectIdle.cs" t="Include" />
+                <e p="CardEffectPool.cs" t="Include" />
                 <e p="ICardEffect.cs" t="Include" />
               </e>
               <e p="CardFactory.cs" t="Include" />
               <e p="CardInfo.cs" t="Include" />
+              <e p="Deck.cs" t="Include" />
               <e p="IPlayable.cs" t="Include" />
               <e p="Targets" t="Include">
                 <e p="ETargetSelector.cs" t="Include" />
@@ -49,8 +55,10 @@
               <e p="CombatManager.cs" t="Include" />
               <e p="GameManager.cs" t="Include" />
             </e>
+            <e p="Player.cs" t="Include" />
             <e p="Utils" t="Include">
               <e p="CardArrayExtensions.cs" t="Include" />
+              <e p="Configuration.cs" t="Include" />
               <e p="InstanceIdManager.cs" t="Include" />
             </e>
           </e>

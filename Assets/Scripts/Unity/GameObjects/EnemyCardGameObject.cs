@@ -11,6 +11,8 @@ namespace Unity.GameObjects
 
         public Text CardUiHealth;
 
+        public Text TextNextAction;
+
         // CONSTRUCTORS
 
         // METHODS
@@ -46,6 +48,11 @@ namespace Unity.GameObjects
             {
                 SetCardData(c.CardInfo);
             }
+        }
+
+        public void SetNextAction(object sender, string action)
+        {
+            TextNextAction.text = action;
         }
     }
 }

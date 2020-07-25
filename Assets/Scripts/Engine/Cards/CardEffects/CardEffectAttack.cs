@@ -1,29 +1,34 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Cards.Targets;
 using Engine.Managers;
-using UnityEngine;
+using Newtonsoft.Json;
+using Random = UnityEngine.Random;
 
 namespace Engine.Cards.CardEffects
 {
-    public class CardEffectAttack : ICardEffect
+    [JsonObject]
+    public class CardEffectAttack : AbstractCardEffect
     {
         // ATTRIBUTES
 
-        private readonly ETargetSelector _selector;
+        [JsonProperty]
+        protected readonly ETargetSelector _selector;
 
         // CONSTRUCTORS
 
-        public CardEffectAttack(ETargetSelector selector)
+        public CardEffectAttack(int effectIdentifier, ETargetSelector selector) : base(effectIdentifier)
         {
             _selector = selector;
         }
+        
 
         // METHODS
 
 
         /// <inheritdoc />
-        public void Resolve(Card owner, CombatManager combatManager)
+        public override void Resolve(Card owner, CombatManager combatManager)
         {
             int damage = CalculateDamage(owner, combatManager);
             switch (_selector)
@@ -42,7 +47,24 @@ namespace Engine.Cards.CardEffects
                     int randomTarget = Random.Range(0, targets.Count);
                     targets[randomTarget].TakeDamage(damage);
                     break;
+                case ETargetSelector.Player:
+                    combatManager.CurrentHealth -= damage;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <inheritdoc />
+        public override AbstractCardEffect GetNext()
+        {
+            return NextEffect;
+        }
+
+        /// <inheritdoc />
+        public override string GetDescription(Card card, CombatManager manager)
+        {
+            return $"Attack for {CalculateDamage(card, manager)}";
         }
 
         /// <summary>
@@ -52,7 +74,7 @@ namespace Engine.Cards.CardEffects
         /// <param name="owner"></param>
         /// <param name="combatManager"></param>
         /// <returns></returns>
-        private int CalculateDamage(Card owner, CombatManager combatManager)
+        protected int CalculateDamage(Card owner, CombatManager combatManager)
         {
             // Logic here to change damage calculation
             return owner.CardInfo.Attack;

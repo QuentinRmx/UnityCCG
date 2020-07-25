@@ -14,7 +14,7 @@ namespace Engine.Cards.Behaviors.Alive
         {
             _card.CardInfo.Health -= damage;
             _card.Update();
-            return _card.CardInfo.Health < 0;
+            return _card.CardInfo.Health <= 0;
         }
 
         /// <inheritdoc />
