@@ -4,6 +4,7 @@ namespace Engine.Cards.Targets
     {
         AllEnemy,
         RandomEnemy,
-        Player
+        Player,
+        SelfEnemy
     }
 }

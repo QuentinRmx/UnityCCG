@@ -1,32 +1,31 @@
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Cards.Targets;
 using Engine.Managers;
-using Newtonsoft.Json;
 using Random = UnityEngine.Random;
 
 namespace Engine.Cards.CardEffects
 {
-    [JsonObject]
-    public class CardEffectAttack : AbstractCardEffect
+    public class CardEffectCriticalStrike : CardEffectAttack
     {
+
         // ATTRIBUTES
 
-        [JsonProperty]
-        protected readonly ETargetSelector _selector;
+        public float DamageMultiplier { get; set; } = 2f;
 
         // CONSTRUCTORS
-
-        public CardEffectAttack(int effectIdentifier, ETargetSelector selector) : base(effectIdentifier)
-        {
-            _selector = selector;
-        }
-        
 
         // METHODS
 
 
+        /// <inheritdoc />
+        public CardEffectCriticalStrike(int effectIdentifier, ETargetSelector selector) : base(effectIdentifier, selector)
+        {
+        }
+        
         /// <inheritdoc />
         public override void Resolve(Card owner, CombatManager combatManager)
         {
@@ -54,17 +53,11 @@ namespace Engine.Cards.CardEffects
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        /// <inheritdoc />
-        public override AbstractCardEffect GetNext()
-        {
-            return NextEffect;
-        }
-
+        
         /// <inheritdoc />
         public override string GetDescription(Card card, CombatManager manager)
         {
-            return $"Attack for {CalculateDamage(card, manager)}";
+            return $"Critical strike for {CalculateDamage(card, manager)}";
         }
 
         /// <summary>
@@ -74,10 +67,10 @@ namespace Engine.Cards.CardEffects
         /// <param name="owner"></param>
         /// <param name="combatManager"></param>
         /// <returns></returns>
-        protected int CalculateDamage(Card owner, CombatManager combatManager)
+        protected new int CalculateDamage(Card owner, CombatManager combatManager)
         {
             // Logic here to change damage calculation
-            return owner.CardInfo.Attack;
+            return (int) (owner.CardInfo.Attack * DamageMultiplier);
         }
     }
 }

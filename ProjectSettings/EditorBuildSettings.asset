@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/DuelScene.unity
+    guid: 2f06f8b83989cfb47accfaddb22d8fc6
   m_configObjects: {}

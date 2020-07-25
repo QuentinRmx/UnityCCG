@@ -15,6 +15,11 @@ namespace Engine.Cards.CardEffects
         {
         }
 
+        public CardEffectIdle() : base()
+        {
+            
+        }
+
         // METHODS
 
 

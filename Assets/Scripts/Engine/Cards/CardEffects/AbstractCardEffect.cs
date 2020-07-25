@@ -5,36 +5,45 @@ using Newtonsoft.Json;
 namespace Engine.Cards.CardEffects
 {
     [JsonObject]
-    public abstract class AbstractCardEffect : ICardEffect
+    public class AbstractCardEffect : ICardEffect
     {
-
-        
         // ATTRIBUTES
 
-        [JsonProperty]
-        public int EffectIdentifier { get; set; }
-        
-        [JsonIgnore]
-        public int InstanceId { get; set; }
+        [JsonProperty] public int EffectIdentifier { get; set; }
+
+        [JsonIgnore] public int InstanceId { get; set; }
+
+        [JsonProperty] protected AbstractCardEffect NextEffect { get; set; }
 
         [JsonProperty]
-        protected AbstractCardEffect NextEffect { get; set; }
-
         public string Description { get; set; }
 
         // CONSTRUCTORS
 
-        protected AbstractCardEffect(int effectIdentifier)
+        public AbstractCardEffect(int effectIdentifier)
         {
             EffectIdentifier = effectIdentifier;
         }
 
+        public AbstractCardEffect()
+        {
+            
+        }
+
         // METHODS
         /// <inheritdoc />
-        public abstract void Resolve(Card owner, CombatManager combatManager);
+        public virtual void Resolve(Card owner, CombatManager combatManager)
+        {
+        }
 
-        public abstract AbstractCardEffect GetNext();
+        public virtual AbstractCardEffect GetNext()
+        {
+            return null;
+        }
 
-        public abstract string GetDescription(Card card, CombatManager manager);
+        public virtual string GetDescription(Card card, CombatManager manager)
+        {
+            return string.Empty;
+        }
     }
 }

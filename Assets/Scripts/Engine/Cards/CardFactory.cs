@@ -41,7 +41,7 @@ namespace Engine.Cards
         {
             // TODO: Refactor factory to load card data from a file.
 //            CardEffectFactory.Instance.Serialize();
-            
+
             CardInfo info;
 
             AbstractAliveBehavior behavior;
@@ -60,6 +60,9 @@ namespace Engine.Cards
                     behavior = new NotAliveBehavior();
                     break;
                 case 3:
+                    behavior = new NotAliveBehavior();
+                    break;
+                case 4:
                     behavior = new NotAliveBehavior();
                     break;
                 default:

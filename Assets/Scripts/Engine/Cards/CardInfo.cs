@@ -7,11 +7,12 @@ namespace Engine.Cards
     {
         public int InstanceId;
         public string Name;
+        public int MaxHealth;
         public int Health;
         public int Attack;
-        public int MaxHealth;
         public int Identifier;
         public string Text;
         public int CardEffectAssociated;
+        public int HealAmount;
     }
 }

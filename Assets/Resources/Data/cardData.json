@@ -2,9 +2,10 @@
   {
     "Identifier": 0,
     "Name": "Black Spirit",
-    "Health": 100,
-    "MaxHealth": 100,
-    "Attack": 10,
+    "Health": 150,
+    "MaxHealth": 150,
+    "Attack": 25,
+    "HealAmount": 25,
     "CardEffectAssociated": 1
   },
   {
@@ -23,9 +24,16 @@
   },
   {
     "Identifier": 3,
-    "Name": "Ship Devourer",
+    "Name": "Shark Assault",
     "Attack": 50,
     "Text": "Deal 50 damage to a random enemy.",
     "CardEffectAssociated": 4
+  },
+  {
+  "Identifier": 4,
+  "Name": "Ship Devourer",
+  "HealAmount": 15,
+  "Text": "Heal you captain for 15.",
+  "CardEffectAssociated": 5
   }
 ]

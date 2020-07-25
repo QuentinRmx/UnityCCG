@@ -8,6 +8,8 @@ namespace Engine.Managers
 {
     public class GameManager
     {
+        public Player Player { get; set; }
+        
         public CombatManager CombatManager { get; }
 
         private readonly IBridge _bridge;
@@ -32,21 +34,25 @@ namespace Engine.Managers
 
         public void Init()
         {
-            
             // TODO: Load enemies.
             AddEnemy(CardFactory.Instance.Create(0));
-
+            Player = new Player();
+            
             // TODO: Load player hand.
             List<Card> deckTest = new List<Card>
             {
                 CardFactory.Instance.Create(1),
                 CardFactory.Instance.Create(1),
-                CardFactory.Instance.Create(1),
-                CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(2),
                 CardFactory.Instance.Create(3),
+                CardFactory.Instance.Create(4)
             };
+            Player.CurrentDeck = new Deck()
+            {
+                Cards = deckTest
+            };
+            
             CombatManager.SetPlayerDeck(deckTest);
             CombatManager.StartPlayerTurn();
         }

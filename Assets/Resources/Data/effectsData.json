@@ -2,42 +2,92 @@
   "$type": "Engine.Cards.CardEffects.AbstractCardEffect[], Assembly-CSharp",
   "$values": [
     {
+      "$type": "Engine.Cards.CardEffects.CardEffectIdle, Assembly-CSharp",
+      "EffectIdentifier": 0,
+      "NextEffect": null,
+      "Description": "Idle"
+    },
+    {
       "$type": "Engine.Cards.CardEffects.CardEffectPool, Assembly-CSharp",
       "Pool": {
         "$type": "Engine.Cards.CardEffects.AbstractCardEffect[], Assembly-CSharp",
         "$values": [
           {
             "$type": "Engine.Cards.CardEffects.CardEffectIdle, Assembly-CSharp",
-            "EffectIdentifier": 1,
-            "NextEffect": null
+            "EffectIdentifier": 0,
+            "NextEffect": null,
+            "Description": "Idle"
           },
           {
             "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
             "_selector": 2,
             "EffectIdentifier": 2,
-            "NextEffect": null
+            "NextEffect": null,
+            "Description": null
+          },
+          {
+            "$type": "Engine.Cards.CardEffects.CardEffectHeal, Assembly-CSharp",
+            "_selector": 3,
+            "EffectIdentifier": 6,
+            "NextEffect": null,
+            "Description": null
+          },
+          {
+            "$type": "Engine.Cards.CardEffects.CardEffectCriticalStrike, Assembly-CSharp",
+            "_selector": 2,
+            "DamageMultiplier": 2.0,
+            "EffectIdentifier": 7,
+            "NextEffect": null,
+            "Description": null
           }
         ]
       },
-      "EffectIdentifier": 0,
-      "NextEffect": null
-    },
-    {
-      "$type": "Engine.Cards.CardEffects.CardEffectIdle, Assembly-CSharp",
       "EffectIdentifier": 1,
-      "NextEffect": null
+      "NextEffect": null,
+      "Description": null
     },
     {
       "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
       "_selector": 2,
       "EffectIdentifier": 2,
-      "NextEffect": null
+      "NextEffect": null,
+      "Description": null
     },
     {
       "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
       "_selector": 0,
       "EffectIdentifier": 3,
-      "NextEffect": null
+      "NextEffect": null,
+      "Description": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectAttack, Assembly-CSharp",
+      "_selector": 1,
+      "EffectIdentifier": 4,
+      "NextEffect": null,
+      "Description": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectHeal, Assembly-CSharp",
+      "_selector": 2,
+      "EffectIdentifier": 5,
+      "NextEffect": null,
+      "Description": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectHeal, Assembly-CSharp",
+      "_selector": 3,
+      "EffectIdentifier": 6,
+      "NextEffect": null,
+      "Description": null
+    },
+    {
+      "$type": "Engine.Cards.CardEffects.CardEffectCriticalStrike, Assembly-CSharp",
+      "_selector": 2,
+      "DamageMultiplier": 2.0,
+      "EffectIdentifier": 7,
+      "NextEffect": null,
+      "Description": null
     }
   ]
 }
