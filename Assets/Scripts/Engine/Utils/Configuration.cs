@@ -6,7 +6,7 @@ namespace Engine.Utils
     {
         // ATTRIBUTES
 
-        public static JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        public static JsonSerializerSettings JsonSettingsCardEffects = new JsonSerializerSettings
             {TypeNameHandling = TypeNameHandling.All};
 
         // CONSTRUCTORS

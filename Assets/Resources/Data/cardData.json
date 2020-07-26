@@ -1,39 +1,47 @@
-[
-  {
-    "Identifier": 0,
-    "Name": "Black Spirit",
-    "Health": 150,
-    "MaxHealth": 150,
-    "Attack": 25,
-    "HealAmount": 25,
-    "CardEffectAssociated": 1
-  },
-  {
-    "Identifier": 1,
-    "Name": "Cursed Sailor",
-    "Attack": 10,
-    "Text": "Deal 10 damage to all enemies.",
-    "CardEffectAssociated": 3
-  },
-  {
-    "Identifier": 2,
-    "Name": "Cursed Captain",
-    "Attack": 25,
-    "Text": "Deal 25 damage to a random enemy.",
-    "CardEffectAssociated": 4
-  },
-  {
-    "Identifier": 3,
-    "Name": "Shark Assault",
-    "Attack": 50,
-    "Text": "Deal 50 damage to a random enemy.",
-    "CardEffectAssociated": 4
-  },
-  {
-  "Identifier": 4,
-  "Name": "Ship Devourer",
-  "HealAmount": 15,
-  "Text": "Heal you captain for 15.",
-  "CardEffectAssociated": 5
-  }
-]
+{
+  "LastIdentifier": 4,
+  "CardInfos": [
+    {
+      "Identifier": 0,
+      "Name": "Black Spirit",
+      "Health": 150,
+      "MaxHealth": 150,
+      "Attack": 25,
+      "HealAmount": 25,
+      "CardEffectAssociated": 1,
+      "CardCategory" : "enemy"
+    },
+    {
+      "Identifier": 1,
+      "Name": "Cursed Sailor",
+      "Attack": 10,
+      "Text": "Deal 10 damage to all enemies.",
+      "CardEffectAssociated": 3,
+      "CardCategory" : "player"
+    },
+    {
+      "Identifier": 2,
+      "Name": "Cursed Captain",
+      "Attack": 25,
+      "Text": "Deal 25 damage to a random enemy.",
+      "CardEffectAssociated": 4,
+      "CardCategory" : "player"
+    },
+    {
+      "Identifier": 3,
+      "Name": "Shark Assault",
+      "Attack": 50,
+      "Text": "Deal 50 damage to a random enemy.",
+      "CardEffectAssociated": 4,
+      "CardCategory" : "player"
+    },
+    {
+      "Identifier": 4,
+      "Name": "Ship Devourer",
+      "HealAmount": 15,
+      "Text": "Heal you captain for 15.",
+      "CardEffectAssociated": 5,
+      "CardCategory" : "player"
+    }
+  ]
+}

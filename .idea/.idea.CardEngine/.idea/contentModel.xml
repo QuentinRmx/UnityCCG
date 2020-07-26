@@ -41,6 +41,7 @@
               <e p="CardFactory.cs" t="Include" />
               <e p="CardInfo.cs" t="Include" />
               <e p="Deck.cs" t="Include" />
+              <e p="ECardCategory.cs" t="Include" />
               <e p="IPlayable.cs" t="Include" />
               <e p="Targets" t="Include">
                 <e p="ETargetSelector.cs" t="Include" />
@@ -49,6 +50,9 @@
             <e p="Communication" t="Include">
               <e p="IAction.cs" t="Include" />
               <e p="IResult.cs" t="Include" />
+            </e>
+            <e p="JsonModels" t="Include">
+              <e p="CardsData.cs" t="Include" />
             </e>
             <e p="Managers" t="Include">
               <e p="BoardManager.cs" t="Include" />
@@ -64,6 +68,8 @@
           </e>
           <e p="Unity" t="Include">
             <e p="Centers" t="Include">
+              <e p="DesignerUICenter.cs" t="Include" />
+              <e p="DuelUICenter.cs" t="Include" />
               <e p="ResourceCenter.cs" t="Include" />
               <e p="UICenter.cs" t="Include" />
             </e>

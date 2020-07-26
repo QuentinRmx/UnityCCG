@@ -94,6 +94,7 @@ namespace Unity.Components
 
         public void StartDragging()
         {
+            if (_mainCamera == null) return;
             Transform objectTransform = transform;
             _originPosition = objectTransform.position;
             //translate the objects position from the world to Screen Point

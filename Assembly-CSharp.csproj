@@ -59,7 +59,7 @@
      <Compile Include="Assets\Scripts\Unity\States\IStateMachine.cs" />
      <Compile Include="Assets\Scripts\Unity\GameObjects\HandCardGameObject.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectFactory.cs" />
-     <Compile Include="Assets\Scripts\Unity\Centers\UICenter.cs" />
+     <Compile Include="Assets\Scripts\Unity\Centers\DuelUICenter.cs" />
      <Compile Include="Assets\Scripts\Engine\Communication\IAction.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectIdle.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Alive\AliveBehavior.cs" />
@@ -78,6 +78,7 @@
      <Compile Include="Assets\Scripts\Engine\Cards\Card.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\Alive\AbstractAliveBehavior.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\IPlayable.cs" />
+     <Compile Include="Assets\Scripts\Engine\Utils\Configuration.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\Deck.cs" />
      <Compile Include="Assets\Scripts\Unity\Components\HoverComponent.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\CardEffects\CardEffectHeal.cs" />
@@ -94,7 +95,10 @@
      <Compile Include="Assets\Scripts\Engine\Managers\CombatManager.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\Behaviors\IBehavior.cs" />
      <Compile Include="Assets\Scripts\Engine\Cards\Targets\ETargetSelector.cs" />
-     <Compile Include="Assets\Scripts\Engine\Utils\Configuration.cs" />
+     <Compile Include="Assets\Scripts\Unity\Centers\DesignerUICenter.cs" />
+     <Compile Include="Assets\Scripts\Unity\Centers\UICenter.cs" />
+     <Compile Include="Assets\Scripts\Engine\JsonModels\CardsData.cs" />
+     <Compile Include="Assets\Scripts\Engine\Cards\ECardCategory.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/_dev/Unity/CardEngine/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

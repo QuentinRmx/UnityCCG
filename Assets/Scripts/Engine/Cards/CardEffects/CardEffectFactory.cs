@@ -25,7 +25,7 @@ namespace Engine.Cards.CardEffects
         private void LoadJsonData()
         {
             string json = File.ReadAllText("Assets/Resources/Data/effectsData.json");
-            AbstractCardEffect[] data = JsonConvert.DeserializeObject<AbstractCardEffect[]>(json, Configuration.JsonSettings);
+            AbstractCardEffect[] data = JsonConvert.DeserializeObject<AbstractCardEffect[]>(json, Configuration.JsonSettingsCardEffects);
 
             _cardEffects = new List<AbstractCardEffect>(data);
         }
@@ -77,7 +77,7 @@ namespace Engine.Cards.CardEffects
                 Instance.Create(0), Instance.Create(1), Instance.Create(2), Instance.Create(3), Instance.Create(4),
                 Instance.Create(5), Instance.Create(6), Instance.Create(7)
             };
-            string json = JsonConvert.SerializeObject(effects.ToArray(), Configuration.JsonSettings);
+            string json = JsonConvert.SerializeObject(effects.ToArray(), Configuration.JsonSettingsCardEffects);
             Debug.Log(json);
         }
     }
