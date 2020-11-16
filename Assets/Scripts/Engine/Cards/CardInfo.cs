@@ -1,4 +1,6 @@
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Engine.Cards
 {
@@ -14,5 +16,7 @@ namespace Engine.Cards
         public string Text;
         public int CardEffectAssociated;
         public int HealAmount;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ECardCategory CardCategory;
     }
 }

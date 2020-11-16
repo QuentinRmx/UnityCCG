@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Engine.Cards;
 using Engine.Cards.CardEffects;
@@ -14,7 +15,9 @@ namespace Engine.Bridges
     {
         // PRIVATE ATTRIBUTES
 
-        private UICenter _uiCenter;
+        private DuelUICenter _duelUiCenter;
+
+        private DesignerUICenter _designerCenter;
 
         private GameManager _gameManager;
 
@@ -34,8 +37,7 @@ namespace Engine.Bridges
 
         private void Start()
         {
-            _uiCenter = FindObjectOfType<UICenter>();
-            _uiCenter.SetBridge(this);
+            SetCenters();
             _resourceCenter = FindObjectOfType<ResourceCenter>();
             _enemies = new List<EnemyCardGameObject>();
             _playerHand = new List<HandCardGameObject>();
@@ -44,12 +46,29 @@ namespace Engine.Bridges
             _gameManager.Init();
         }
 
+        private void SetCenters()
+        {
+            _duelUiCenter = FindObjectOfType<DuelUICenter>();
+            if (_duelUiCenter != null)
+            {
+                _duelUiCenter.SetBridge(this);
+            }
+
+            _designerCenter = FindObjectOfType<DesignerUICenter>();
+            if (_designerCenter != null)
+            {
+                _designerCenter.SetBridge(this);
+            }
+        }
+
 
         // REQUESTS FROM UI TO GAME MANAGER.
 
         public void PlayCardFromHand(int instanceId)
         {
-            if (_gameManager.GetCurrentMana() <= 0 || _gameManager.CombatManager.HasWon || _gameManager.CombatManager.HasLost)
+            if (_duelUiCenter == null) return;
+            if (_gameManager.GetCurrentMana() <= 0 || _gameManager.CombatManager.HasWon ||
+                _gameManager.CombatManager.HasLost)
                 return;
             HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
             if (cardInHand != null)
@@ -58,17 +77,18 @@ namespace Engine.Bridges
                 // Play logic here.
                 _playerHand.Remove(cardInHand);
                 Destroy(cardInHand.gameObject);
-                _uiCenter.SetCardsPlayed(_gameManager.CombatManager.GetGraveyard().Count());
+                _duelUiCenter.SetCardsPlayed(_gameManager.CombatManager.GetGraveyard().Count());
                 // TODO: Implement proper win detection.
                 if (_gameManager.CombatManager.HasWon)
                 {
-                    _uiCenter.Win();
+                    _duelUiCenter.Win();
                 }
             }
         }
 
         public void RerollCard(int instanceId)
         {
+            if (_duelUiCenter == null) return;
             if (_gameManager.GetCurrentMana() <= 0)
                 return;
             HandCardGameObject cardInHand = _playerHand.FirstOrDefault(c => c.InstanceId == instanceId);
@@ -88,13 +108,15 @@ namespace Engine.Bridges
         /// <param name="enemy"></param>
         public void AddEnemy(Card enemy)
         {
+            if (_duelUiCenter == null)
+                return;
             GameObject enemyGo = Instantiate(EnemyPrefab);
             EnemyCardGameObject cardGameObject = enemyGo.GetComponent<EnemyCardGameObject>();
             cardGameObject.SetCardData(enemy.CardInfo);
             enemy.OnDataChanged += cardGameObject.DataChangedCardData;
             enemy.OnNextActionPicked += cardGameObject.SetNextAction;
             _enemies.Add(cardGameObject);
-            _uiCenter.AddEnemy(enemyGo);
+            _duelUiCenter.AddEnemy(enemyGo);
         }
 
         public void RemoveEnemy(Card enemy)
@@ -112,6 +134,7 @@ namespace Engine.Bridges
         /// <param name="position">The position to add the card at.</param>
         public void AddCardToPlayerHand(Card toAdd, int position)
         {
+            if (_duelUiCenter == null) return;
             GameObject newCard = Instantiate(CardGameObjectPrefab);
             HandCardGameObject cardGo = newCard.GetComponent<HandCardGameObject>();
             if (cardGo != null)
@@ -123,7 +146,7 @@ namespace Engine.Bridges
 
             toAdd.OnDataChanged += cardGo.DataChangedCardData;
             _playerHand.Add(cardGo);
-            _uiCenter.AddCardToHand(newCard, position);
+            _duelUiCenter.AddCardToHand(newCard, position);
         }
 
         /// <inheritdoc />
@@ -131,7 +154,7 @@ namespace Engine.Bridges
         {
             _playerHand.Clear();
             _gameManager.EndTurn();
-            _uiCenter.SetCurrentTurn(_gameManager.GetTurnNumber());
+            _duelUiCenter.SetCurrentTurn(_gameManager.GetTurnNumber());
         }
 
         /// <inheritdoc />
@@ -143,31 +166,50 @@ namespace Engine.Bridges
         /// <inheritdoc />
         public void OnDeckChange(object sender, Card e)
         {
-            _uiCenter.UpdateDeckSize(_gameManager.CombatManager.GetPlayerDeckSize());
+            if (_duelUiCenter == null) return;
+            _duelUiCenter.UpdateDeckSize(_gameManager.CombatManager.GetPlayerDeckSize());
         }
 
         /// <inheritdoc />
         public void OnCurrentManaChange(object sender, int amount)
         {
-            _uiCenter.SetMana(amount, _gameManager.CombatManager.MaxMana);
+            if (_duelUiCenter == null) return;
+            _duelUiCenter.SetMana(amount, _gameManager.CombatManager.MaxMana);
         }
 
         /// <inheritdoc />
         public void OnMaxHealthChange(object sender, int currentHealth)
         {
-            _uiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth, _gameManager.CombatManager.MaxHealth);
+            if (_duelUiCenter == null) return;
+            _duelUiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth,
+                _gameManager.CombatManager.MaxHealth);
         }
 
         /// <inheritdoc />
         public void OnCurrentHealthChange(object sender, int maxHealth)
         {
-            _uiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth,  _gameManager.CombatManager.MaxHealth);
+            if (_duelUiCenter == null) return;
+            _duelUiCenter.UpdateHealthText(_gameManager.CombatManager.CurrentHealth,
+                _gameManager.CombatManager.MaxHealth);
         }
 
         /// <inheritdoc />
         public void OnPlayerDefeat(object sender, EventArgs e)
         {
-            _uiCenter.Lose();
+            if (_duelUiCenter == null) return;
+            _duelUiCenter.Lose();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Card> GetAllCardsFromJson()
+        {
+            return CardFactory.Instance.GetAllCards();
+        }
+
+        /// <inheritdoc />
+        public void OverrideJsonCardData(IEnumerable<Card> cards)
+        {
+            CardFactory.Instance.SerializeCards(cards);
         }
     }
 }
